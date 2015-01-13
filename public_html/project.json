@@ -1,0 +1,12 @@
+{
+    "debugMode"     : 1,
+    "frameRate"     : 30,
+    "id"            : "gameCanvas",
+    "renderMode"    : 1,
+    "modules" : ["chipmunk"],
+    "jsList"        :
+    [
+        "src/app.js",
+        "src/res.js"
+    ]
+}

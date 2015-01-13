@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<head>
+    <title>Shrouded Sun</title>
+    <script type="text/javascript" src="cocos2d-js-v3.2.js" charset="UTF-8"></script>
+</head>
+<body>
+    <canvas id="gameCanvas" width="1280" height="720"></canvas>
+    <script type="text/javascript">
+          window.onload = function(){
+              cc.game.onStart = function(){
+                  //set resolution policy
+                  cc.view.setDesignResolutionSize(1280,720,cc.ResolutionPolicy.NO_BORDER);
+                  cc.view.resizeWithBrowserSize(true);
+                  //load resources
+                  cc.LoaderScene.preload(res_list, function () {
+                      startGame();
+                  }, this);
+              };
+              cc.game.run("gameCanvas");
+          };
+    </script>
+</body>
 </html>
