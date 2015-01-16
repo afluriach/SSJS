@@ -11,7 +11,7 @@
               cc.game.onStart = function(){
                   //set resolution policy
                   cc.view.setDesignResolutionSize(1280,720,cc.ResolutionPolicy.NO_BORDER);
-                  cc.view.resizeWithBrowserSize(true);
+                  cc.view.resizeWithBrowserSize(false);
                   //load resources
                   cc.LoaderScene.preload(res_list, function () {
                       startGame();
