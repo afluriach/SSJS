@@ -6,6 +6,15 @@
     "modules" : ["chipmunk"],
     "jsList"        :
     [
+        "src/class.js",
+        "src/math.js",
+        
+        "src/controls.js",
+        "src/graphics.js",
+        
+        "src/layer.js",
+        "src/menu.js",
+        
         "src/app.js",
         "src/res.js"
     ]
