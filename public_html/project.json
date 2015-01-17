@@ -16,6 +16,9 @@
         "src/menu.js",
         
         "src/app.js",
-        "src/res.js"
+        "src/gameplay_scene.js",
+        "src/res.js",
+        
+        "src/underworld.js"
     ]
 }

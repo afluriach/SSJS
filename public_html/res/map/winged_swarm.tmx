@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="dirt1_grey" tilewidth="32" tileheight="32">
+  <image source="dirt1_grey.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="65" name="block wall dark grey" tilewidth="32" tileheight="32">
+  <image source="block_wall_dark_grey.png" width="128" height="128"/>
+ </tileset>
+ <layer name="floor" width="80" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Wx1KCQRBFYQRFMaJiziggwZyz7/9UnvXsZlj8dtU5Vd/qVu+7VjMzMzMzMzMzMzMz+x8tYgnLWMEq1tBGq3BPy7mP1gY20cEWtrGDXawX7mk599HaxwEOcYRjnOAUe4V7Ws59tLo4xwV66GOAS5wV7mk599EaYYwJrnCNG9xiWMEerXs84BFPeMYLXnFXwR6td3zgE1/4xg9+8VbBHq06GpjFHJqYxwJmCve0nPto+f9Nl//fdPn/mZmZmZmZWbT+AFwMaOMAMgAA
+  </data>
+ </layer>
+ <layer name="walls" width="80" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3XCwrCMAwA0NzN6Rzzd//TOHCgDofBKFR4D8JIaWlIS2ERAAAAAADQhsMU24cYi/klscdavFrbut2P87WxTC3/QP9q9K/mGLe3J+bv8IW8i/ub1k+xT9aSndeSfzzzlry7f+MH+fL+bZK1ZOe1xPtXo381+ldziud/gKGYnxN79PN4l1gLAAAAS1cMOp/OADIAAA==
+  </data>
+ </layer>
+ <objectgroup name="environment">
+  <object name="bar1" type="CellDoor" x="992" y="768" width="32" height="32"/>
+  <object name="bar2" type="CellDoor" x="992" y="704" width="32" height="32"/>
+  <object name="bar3" type="CellDoor" x="864" y="768" width="32" height="32"/>
+  <object name="bar4" type="CellDoor" x="864" y="704" width="32" height="32"/>
+  <object name="bar5" type="CellDoor" x="736" y="768" width="32" height="32"/>
+  <object name="bar6" type="CellDoor" x="736" y="704" width="32" height="32"/>
+  <object name="bar7" type="CellDoor" x="608" y="768" width="32" height="32"/>
+  <object name="bar8" type="CellDoor" x="608" y="704" width="32" height="32"/>
+  <object name="bar9" type="CellDoor" x="480" y="768" width="32" height="32"/>
+  <object name="bar10" type="CellDoor" x="480" y="704" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="logic">
+  <object name="sensor1" type="AreaSensor" x="960" y="800" width="96" height="96"/>
+  <object name="sensor2" type="AreaSensor" x="960" y="608" width="96" height="96"/>
+  <object name="sensor3" type="AreaSensor" x="832" y="800" width="96" height="96"/>
+  <object name="sensor4" type="AreaSensor" x="832" y="608" width="96" height="96"/>
+  <object name="sensor5" type="AreaSensor" x="704" y="800" width="96" height="96"/>
+  <object name="sensor6" type="AreaSensor" x="704" y="608" width="96" height="96"/>
+  <object name="sensor7" type="AreaSensor" x="576" y="800" width="96" height="96"/>
+  <object name="sensor8" type="AreaSensor" x="576" y="608" width="96" height="96"/>
+  <object name="sensor9" type="AreaSensor" x="448" y="800" width="96" height="96"/>
+  <object name="sensor10" type="AreaSensor" x="447" y="608" width="96" height="96"/>
+  <object name="gatekeeper_dest" type="MapPos" x="1504" y="832" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="doors">
+  <object name="exit" type="Door" x="1536" y="736" width="32" height="32">
+   <properties>
+    <property name="entrance_dir" value="left"/>
+    <property name="locked" value="true"/>
+   </properties>
+  </object>
+  <object name="entrance" type="Door" x="1376" y="896" width="32" height="32">
+   <properties>
+    <property name="entrance_dir" value="up"/>
+    <property name="locked" value="true"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="agents">
+  <object name="spirit1" type="WingedSwarmSpirit" x="1280" y="640" width="32" height="32"/>
+  <object name="spirit2" type="WingedSwarmSpirit" x="1472" y="640" width="32" height="32"/>
+  <object name="spirit3" type="WingedSwarmSpirit" x="1408" y="672" width="32" height="32"/>
+  <object name="spirit4" type="WingedSwarmSpirit" x="1344" y="672" width="32" height="32"/>
+  <object name="spirit5" type="WingedSwarmSpirit" x="1344" y="736" width="32" height="32"/>
+  <object name="spirit6" type="WingedSwarmSpirit" x="1408" y="736" width="32" height="32"/>
+  <object name="spirit7" type="WingedSwarmSpirit" x="1408" y="800" width="32" height="32"/>
+  <object name="spirit8" type="WingedSwarmSpirit" x="1344" y="800" width="32" height="32"/>
+  <object name="spirit9" type="WingedSwarmSpirit" x="1280" y="832" width="32" height="32"/>
+  <object name="spirit10" type="WingedSwarmSpirit" x="480" y="640" width="32" height="32"/>
+  <object name="gatekeeper" type="WingedSwarmGatekeeper" x="1504" y="736" width="32" height="32">
+   <properties>
+    <property name="facing" value="left"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

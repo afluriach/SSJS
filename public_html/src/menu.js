@@ -72,6 +72,15 @@ var LevelSelectMenu = MenuScene.extend({
         );
 
         this.textLayer.addLabel(
+            'Winged Swarm',
+            'winged swarm',
+            new Vector2(screenSize.width/2, screenSize.height - 200),
+            function(){
+                cc.director.runScene(new WingedSwarm());
+            }
+        );
+
+        this.textLayer.addLabel(
             'Back',
             'back',
             new Vector2(screenSize.width/2, 100),
