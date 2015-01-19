@@ -8,17 +8,24 @@
     [
         "src/class.js",
         "src/math.js",
+        "src/util.js",
         
         "src/controls.js",
         "src/graphics.js",
+        "src/physics.js",
         
         "src/layer.js",
         "src/menu.js",
         
         "src/app.js",
         "src/gameplay_scene.js",
+        "src/gameplay_layer.js",
         "src/res.js",
         
+        "src/game_object.js",
+        "src/game_object_system.js",
+        
+        "src/environment.js",
         "src/underworld.js"
     ]
 }

@@ -6,6 +6,12 @@ var mapNames = [
     'winged_swarm'
 ];
 
+var spriteNames = [
+    'cell_door',
+    'underworld_door_locked',
+    'underworld_door_unlocked'
+];
+
 function addResources(res_names, path, suffix, extension)
 {
     for(var i=0;i<res_names.length; ++i)
@@ -15,6 +21,7 @@ function addResources(res_names, path, suffix, extension)
 }
 
 addResources(mapNames, 'res/map/', '_map', '.tmx');
+addResources(spriteNames, 'res/sprite/', '_sprite', '.png');
 
 //list of all resource paths
 var res_list = [];

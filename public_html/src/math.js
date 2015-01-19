@@ -1,4 +1,4 @@
-Vector2 = Class.extend({
+var Vector2 = Class.extend({
     ctor: function(x,y)
     {
         this.x = x;
@@ -28,7 +28,7 @@ Vector2 = Class.extend({
     {
         return cp.v(this.x, this.y);
     },
-        
+    
     len : function()
     {
         return Math.sqrt(this.x*this.x + this.y*this.y);
@@ -108,3 +108,14 @@ Vector2.ray = function(len, angle)
 };
 
 Vector2.zero = new Vector2(0,0);
+
+function pixelCoordToPhysics(x,y)
+{
+    //return new Box2D.Common.Math.b2Vec2(tilesPerPixel*x, tilesPerPixel*y);
+    return new Vector2(tilesPerPixel*x, tilesPerPixel*y);
+};
+
+function mapObjToPhysicsPos(obj)
+{
+   return pixelCoordToPhysics(parseInt(obj.x)+obj.width/2, parseInt(obj.y)+obj.height/2);
+};
