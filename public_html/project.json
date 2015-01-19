@@ -6,26 +6,26 @@
     "modules" : ["chipmunk"],
     "jsList"        :
     [
-        "src/class.js",
-        "src/math.js",
-        "src/util.js",
+        "class",
+        "math",
+        "util",
         
-        "src/controls.js",
-        "src/graphics.js",
-        "src/physics.js",
+        "controls",
+        "graphics",
+        "physics",
         
-        "src/layer.js",
-        "src/menu.js",
+        "layer",
+        "menu",
         
-        "src/app.js",
-        "src/gameplay_scene.js",
-        "src/gameplay_layer.js",
-        "src/res.js",
+        "app",
+        "gameplay_scene",
+        "gameplay_layer",
+        "res",
         
-        "src/game_object.js",
-        "src/game_object_system.js",
+        "game_object",
+        "game_object_system",
         
-        "src/environment.js",
-        "src/underworld.js"
+        "environment",
+        "underworld"
     ]
 }

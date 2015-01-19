@@ -297,7 +297,7 @@ cc.loader = {
             self._loadJs4Dependency(preDir, list, 0, callback);
         } else {
             cc.async.map(list, function (item, index, cb1) {
-                var jsPath = cc.path.join(preDir, item);
+                var jsPath = cc.path.join(preDir, item+'.js');
                 if (localJsCache[jsPath]) return cb1(null);
                 self._createScript(jsPath, false, cb1);
             }, callback);
@@ -1194,7 +1194,7 @@ cc.game = {
         self._prepareCalled = true;
         var jsList = config[CONFIG_KEY.jsList] || [];
         if (cc.Class) {//is single file
-            loader.loadJsWithImg("", jsList, function (err) {
+            loader.loadJsWithImg("src/", jsList, function (err) {
                 if (err) throw err;
                 self._prepared = true;
                 if (cb) cb();
