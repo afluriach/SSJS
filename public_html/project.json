@@ -25,7 +25,9 @@
         "game_object",
         "game_object_system",
         
+        "entity",
         "environment",
+
         "underworld"
     ]
 }

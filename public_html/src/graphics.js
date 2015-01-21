@@ -46,11 +46,11 @@ var EntitySprite = cc.Node.extend({
         }
         else
         {
-            entityAnimationsLoaded[animationSpriteRes] = new EntityAnimation[animationSpriteRes];
+            entityAnimationsLoaded[animationSpriteRes] = new EntityAnimation(animationSpriteRes);
             this.entityAnimation = entityAnimationsLoaded[animationSpriteRes];
         }
         
-        this.sprite = cc.Sprite.create(animation.animations[0][0]);
+        this.sprite = cc.Sprite.create(this.entityAnimation.animations[0][0]);
         this.addChild(this.sprite, 1);
     },
     directionToAnimationIndex: function(dir)

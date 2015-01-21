@@ -26,18 +26,11 @@ var CellDoor = Barrier.extend({
     }
 });
 
-var WingedSwarmGatekeeper = GameObject.extend({
+var WingedSwarmGatekeeper = Entity.extend({
     ctor: function(args)
     {
-        this._super(args);
-        
-        this.entitySprite = new EntitySprite(new EntityAnimation(res.komachi_entity));
-        crntScene().gameplayLayer.addChild(this.entitySprite, gameLayers.ground);
-        
-        var pix = this.getPos().mult(pixelsPerTile);
-        this.entitySprite.x = pix.x;
-        this.entitySprite.y = pix.y;
-        
+        this._super(args, res.komachi_entity, gameLayers.ground);
+
         this.dir = 0;
         this.frame = 0;
         this.lastUpdate = 0;
@@ -61,7 +54,7 @@ var WingedSwarmGatekeeper = GameObject.extend({
                 
                 if(this.dir == 8) this.dir = 0;
             }
-            this.entitySprite.setFrame(this.dir, this.frame);
+            this.sprite.setFrame(this.dir, this.frame);
         }
     }
 });
