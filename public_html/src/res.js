@@ -12,6 +12,10 @@ var spriteNames = [
     'underworld_door_unlocked'
 ];
 
+var musicTracks = [
+    'see'
+];
+
 function addResources(res_names, path, suffix, extension)
 {
     for(var i=0;i<res_names.length; ++i)
@@ -22,6 +26,7 @@ function addResources(res_names, path, suffix, extension)
 
 addResources(mapNames, 'res/map/', '_map', '.tmx');
 addResources(spriteNames, 'res/sprite/', '_sprite', '.png');
+addResources(musicTracks, 'res/music/', '_track', '.ogg');
 
 //list of all resource paths
 var res_list = [];

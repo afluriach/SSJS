@@ -11,6 +11,8 @@ function init()
     screenSize = cc.director.getWinSize();
     activateMouseControls();
     activateKeyControls();
+    
+    cc.audioEngine.setMusicVolume(0.4);
 }
 
 function startGame()

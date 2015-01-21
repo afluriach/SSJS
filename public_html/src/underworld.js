@@ -3,6 +3,7 @@ var WingedSwarm = GameplayScene.extend({
     onEnter: function()
     {
         this._super(res.winged_swarm_map);
+        cc.audioEngine.playMusic(res.see_track, true);
     }
 });
 
