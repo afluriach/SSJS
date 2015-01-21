@@ -25,24 +25,19 @@ function GameObjectSystem()
     
     this.update = function()
     {
+        this.handleRemovals();
+        this.updateAll();
+        this.handleAdditions();
+    };
+    
+    this.handleRemovals = function()
+    {
         for(var name in this.toRemove)
         {
             this.objects[name].onRemove();
 
             delete this.objects[name];
             delete this.toRemove[name];
-        }
-        
-        for(var objName in this.objects)
-        {
-            if(this.objects[objName].update)
-                this.objects[objName].update();
-        }
-        
-        for(var name in this.toAdd)
-        {
-            this.objects[name] = this.toAdd[name];
-            delete this.toAdd[name];
         }
     };
     
@@ -52,14 +47,6 @@ function GameObjectSystem()
         {
             this.objects[name] = this.toAdd[name];
             delete this.toAdd[name];
-        }
-    };
-    
-    this.render = function()
-    {
-        for(var objName in this.objects)
-        {
-            this.objects[objName].render();
         }
     };
     
@@ -79,7 +66,8 @@ function GameObjectSystem()
     {
         for(var objName in this.objects)
         {
-            this.objects[objName].update();
+            if(this.objects[objName].update)
+                this.objects[objName].update();
         }
     };
 }

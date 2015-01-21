@@ -87,6 +87,8 @@ var GameplayScene = cc.Scene.extend({
             if(this.checkCameraScroll())
                 this.lastScroll = 0;
         }
+        
+        gameObjectSystem.update();
     },
     checkCameraScroll: function()
     {
