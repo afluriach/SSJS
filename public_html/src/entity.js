@@ -12,7 +12,7 @@ var Entity = GameObject.extend({
         crntScene().gameplayLayer.addChild(this.sprite, layer);
         this.updateSpritePos();
         
-        this.stepDistance = 0;
+        this.stepAccumulator = new Accumulator(0,this.stepSize, this.stepAnimation.bind(this));
         this.leftStep = false;
     },
     update: function()
@@ -33,18 +33,12 @@ var Entity = GameObject.extend({
         if(speed === 0)
         {
             this.sprite.setFrame(1);
-            this.stepDistance = 0;
+            this.stepAccumulator.set(0);
         }
         else
         {
             //accumulate distance moved in the last frame
-            this.stepDistance += speed*secondsPerFrame;
-
-            if(this.stepDistance >= this.stepSize)
-            {
-                this.stepDistance -= this.stepSize;
-                this.stepAnimation();
-            }
+            this.stepAccumulator.add(speed*secondsPerFrame);
         }
     },
     stepAnimation: function()

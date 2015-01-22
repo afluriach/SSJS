@@ -34,31 +34,28 @@ var WingedSwarmGatekeeper = Entity.extend({
 
         this.dir = 0;
         this.frame = 0;
-        this.lastUpdate = 0;
+        
+        this.animationAccumulator = new Accumulator(0,0.25,this.cycleAnimation.bind(this));
     },
     update: function()
     {
         //cycle through frames, just for testing
-        
-        this.lastUpdate += secondsPerFrame;
-        
-        if(this.lastUpdate >= 0.25)
+        this.animationAccumulator.add(secondsPerFrame);
+    },
+    cycleAnimation: function()
+    {
+        ++this.frame;
+
+        if(this.frame == 3)
         {
-            this.lastUpdate -= 0.25;
-            
-            ++this.frame;
-            
-            if(this.frame == 3)
-            {
-                this.frame = 0;
-                ++this.dir;
-                
-                if(this.dir == 8) this.dir = 0;
-                this.sprite.setDirection(this.dir);
-            }
-            
-            this.sprite.setFrame(this.frame);
+            this.frame = 0;
+            ++this.dir;
+
+            if(this.dir == 8) this.dir = 0;
+            this.sprite.setDirection(this.dir);
         }
+
+        this.sprite.setFrame(this.frame);
     }
 });
 
