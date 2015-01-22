@@ -11,7 +11,7 @@
    H4sIAAAAAAAAA+3WxW4DQRAAUYeZGR1mZk7+/6tS51EWZuRox0mV9E6tPnhHsrrVMjMzMzMzMzMzMzPLo1GMYRwTmMQUpjGSOA+L2e9BL/rQjwEMdvQXd7ZZzGEeC1jEEpYxkzgPi9mv+ya5tIo1rGMDm2hjCyuJ87CY/bpvkks72MUe9nGAQxxhO3EeFrNf901y6QSnOMM5LnCJKxw3MK/7Jrl0g1vc4R4PeMQTrhuYF33zXHvBK97wjg984gvPDcyLvnmu/XQrDGG4VXxLVM2r9sr2i755rv3G/Ve15/0Xd/+Fe95/cfdfuPeX7r/U/7iyeVjMfrfdf6n/cWXzsJj9brv/zMzMzMz+a98W7C0EADIAAA==
   </data>
  </layer>
- <layer name="walls" width="80" height="40">
+ <layer name="wall" width="80" height="40">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3X2wqCQBAA0Pm4ssRu//81CRaZmCSjtMY5MMh42R3mYRYjAAAAAACgDKc29r1okvntiz3mxtiapahWzj/dmyP7/Zr0L0f/cs7RzZh4XOsF8l28ZtehjWOyxpL7V3JtW7CF/pVcY8m1PZVc43D+NQvkw/n3z+eH8zdH/3L0L+cS7/+adTK/juxRDd7pR0w8m1oTAAD4rTvu59P9ADIAAA==
   </data>

@@ -37,8 +37,21 @@ var GameObject = Class.extend({
             cc.log(this.name + ': sensor not defined, defaulting to false');
         }
         
-        //args represents a rectangle map object
-        if(args.width && args.height)
+        if(args.circle)
+        {
+            this.physicsBody = physics.createCircleBody
+            (
+                pos,
+                this.radius,
+                args.mass,
+                this,
+                args.group,
+                args.layer,
+                args.sensor
+            );
+        }
+        //create a rectangle object
+        else
         {
             //map dimensions must be converted from pixels
             var width = args.width*tilesPerPixel;

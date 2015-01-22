@@ -45,7 +45,7 @@ function Physics()
     {
         if(mass < 0)
         {
-            var body = new cp.StaticBody();
+            var body = createStaticBody();
             body.static = true;
         }
         else
@@ -75,6 +75,21 @@ function Physics()
     {
         this.space.step(secondsPerFrame);
     };
+    
+    this.createWallTile = function(x, y)
+    {
+        var body = createStaticBody();
+        body.static = true;
+        body.p =  new cp.Vect(x+0.5, y+0.5);
+        var shape = new cp.BoxShape(body, 1, 1);
+        body.shape = shape;
+        this.space.addShape(shape);
+        
+        shape.setCollisionType(PhysicsGroup.wall);
+        shape.group = PhysicsGroup.wall;
+        shape.layers = PhysicsLayer.all;
+    };
+
 }
 
 PhysicsLayer = {
@@ -89,5 +104,6 @@ PhysicsGroup = {
     player: 1,
     agent: 2,
     environment: 3,
-    sensor: 4
+    sensor: 4,
+    wall: 5
 };

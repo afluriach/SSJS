@@ -29,6 +29,7 @@ var GameplayScene = cc.Scene.extend({
         gameObjectSystem = new GameObjectSystem();
         
         this.loadMapObjects();
+        this.addWalls();
         
         cc.director.getScheduler().scheduleUpdateForTarget(this, 0, false);
     },
@@ -112,6 +113,23 @@ var GameplayScene = cc.Scene.extend({
         else
         {
             return false;
+        }
+    },
+    addWalls: function()
+    {
+        var layer = this.map.getLayer('wall');
+        if(!layer) return;
+
+        //if getTileAt is null, there is no texture at that location
+        for(var y =0; y < layer._layerSize.height; ++y)
+        {
+            for(var x = 0; x < layer._layerSize.width; ++x)
+            {
+                if(layer.getTileAt(x,y) !== null)
+                {
+                    physics.createWallTile(x,this.map._mapSize.height-y-1);
+                }
+            }
         }
     }
 });

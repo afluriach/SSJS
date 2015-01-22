@@ -1,7 +1,10 @@
 //GameObject that uses an entity animation
 var Entity = GameObject.extend({
+    radius: 0.45,
     ctor: function(args, animationRes, layer)
     {
+        args.circle = true;
+        
         this._super(args);
         
         this.sprite = new EntitySprite(animationRes);
@@ -51,7 +54,7 @@ var Player = Entity.extend({
         //acceleration is applied
         var dv = this.acceleration*secondsPerFrame;
         
-        if(dv*dv > accel.len())
+        if(dv*dv > accel.len2())
         {
             //the motor force would overshoot the desired velocity
             this.setVel(desiredVelocity);

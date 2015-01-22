@@ -27,6 +27,7 @@ var CellDoor = Barrier.extend({
 });
 
 var WingedSwarmGatekeeper = Entity.extend({
+    mass: Infinity,
     ctor: function(args)
     {
         this._super(args, res.komachi_entity, gameLayers.ground);
@@ -65,16 +66,21 @@ var WingedSwarmSpirit = Entity.extend({
     mass: 3,
     ctor: function(args)
     {
+        args.layer = PhysicsLayer.ground;
+        args.group = PhysicsGroup.agent;
         this._super(args, res.flandre_entity, gameLayers.ground);
     }
 });
 
 var UnderworldCirno = Player.extend({
-   mass: 3,
-   speed: 3,
-   acceleration: 4.5,
-   ctor: function(args)
-   {
-       this._super(args, res.cirno_entity, gameLayers.ground);
-   }
+    mass: 3,
+    speed: 3,
+    acceleration: 4.5,
+    ctor: function(args)
+    {
+        args.layer = PhysicsLayer.ground;
+        args.group = PhysicsGroup.player;
+
+        this._super(args, res.cirno_entity, gameLayers.ground);
+    }
 });

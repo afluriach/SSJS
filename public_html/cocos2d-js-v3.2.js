@@ -35457,7 +35457,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend({
             this._atlasIndexArray = null;
     },
     getTileAt: function (pos, y) {
-        if(!pos)
+        if(!isDefined(pos) || pos == null)
             throw "cc.TMXLayer.getTileAt(): pos should be non-null";
         if(y !== undefined)
             pos = cc.p(pos, y);
