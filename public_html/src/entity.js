@@ -1,6 +1,7 @@
 //GameObject that uses an entity animation
 var Entity = GameObject.extend({
     radius: 0.45,
+    stepSize: 0.3,
     ctor: function(args, animationRes, layer)
     {
         args.circle = true;
@@ -10,16 +11,57 @@ var Entity = GameObject.extend({
         this.sprite = new EntitySprite(animationRes);
         crntScene().gameplayLayer.addChild(this.sprite, layer);
         this.updateSpritePos();
+        
+        this.stepDistance = 0;
+        this.leftStep = false;
     },
     update: function()
     {
         this.updateSpritePos();
+        this.updateStep();
     },
     updateSpritePos: function()
     {
         var pix = this.getPos().mult(pixelsPerTile);
         this.sprite.x = pix.x;
         this.sprite.y = pix.y;
+    },
+    updateStep: function()
+    {
+        var speed = this.getVel().len();
+        
+        if(speed === 0)
+        {
+            this.sprite.setFrame(1);
+            this.stepDistance = 0;
+        }
+        else
+        {
+            //accumulate distance moved in the last frame
+            this.stepDistance += speed*secondsPerFrame;
+
+            if(this.stepDistance >= this.stepSize)
+            {
+                this.stepDistance -= this.stepSize;
+                this.stepAnimation();
+            }
+        }
+    },
+    stepAnimation: function()
+    {
+        switch(this.sprite.frame)
+        {
+            case 0:
+                this.sprite.setFrame(1);
+                this.leftStep = false;
+                break;
+            case 1:
+                this.sprite.setFrame(this.leftStep ? 0 : 2);
+                break;
+            case 2:
+                this.sprite.setFrame(1);
+                this.leftStep = true;
+        }
     }
 });
 
