@@ -22,6 +22,13 @@ var UILayer = cc.Layer.extend({
     {
         this._super();
         
+        this.pauseMsg = cc.LabelTTF.create("-PAUSED-", 'Arial', 32);
+        this.pauseMsg.x = screenSize.width/2;
+        this.pauseMsg.y = screenSize.height/2;
+        
+        this.addChild(this.pauseMsg, 1);
+        this.pauseMsg.setVisible(false);
+        
         this.actionButton = new ActionButton();
         this.actionButton.x = screenSize.width - 50;
         this.actionButton.y = 50;
@@ -32,16 +39,11 @@ var UILayer = cc.Layer.extend({
     },
     showPauseMsg: function()
     {
-        this.pauseMsg = cc.LabelTTF.create("-PAUSED-", 'Arial', 32);
-        this.pauseMsg.x = screenSize.width/2;
-        this.pauseMsg.y = screenSize.height/2;
-        
-        this.addChild(this.pauseMsg, 1);
+        this.pauseMsg.setVisible(true);
     },
     removePauseMsg: function()
     {
-        this.pauseMsg.removeFromParent();
-        delete this.pauseMsg;
+        this.pauseMsg.setVisible(false);
     },
     setInteractMessage: function(msg)
     {
