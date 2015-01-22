@@ -130,5 +130,11 @@ var GameObject = Class.extend({
     setSensor: function(sensor)
     {
         this.physicsBody.shape.setSensor(sensor);
-    }
+    },
+    getBB : function()
+    {
+        var v =  this.physicsBody.shape.getBB();
+        
+        return v;
+    },
 });

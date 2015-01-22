@@ -76887,6 +76887,11 @@ var bbIntersects2 = function(bb, l, b, r, t)
 {
 	return (bb.l <= r && l <= bb.r && bb.b <= t && b <= bb.t);
 };
+//Check for open interval overlap
+var bbIntersects2Open = function(bb, l, b, r, t)
+{
+	return (bb.l < r && l < bb.r && bb.b < t && b < bb.t);
+};
 var bbContainsBB = function(bb, other)
 {
 	return (bb.l <= other.l && bb.r >= other.r && bb.b <= other.b && bb.t >= other.t);
@@ -79242,8 +79247,8 @@ Space.prototype.bbQuery = function(bb, layers, group, func)
 {
 	var helper = function(shape){
 		if(
-			!(shape.group && group === shape.group) && (layers & shape.layers) &&
-			bbIntersects2(bb, shape.bb_l, shape.bb_b, shape.bb_r, shape.bb_t)
+			(!(shape.group && group === shape.group) || !group) && (layers & shape.layers) &&
+			bbIntersects2Open(bb, shape.bb_l, shape.bb_b, shape.bb_r, shape.bb_t)
 		){
 			func(shape);
 		}

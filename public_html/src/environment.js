@@ -38,5 +38,10 @@ var Barrier = GameObject.extend({
         this.locked = bool;
         this.sprite.setVisible(bool);
         this.setSensor(!bool);
+    },
+    isBlocked: function()
+    {
+        //Check for objects in all groups.
+        return physics.isObjectPresentInArea(this.getBB(), PhysicsLayer.all, 0, this);
     }
 });

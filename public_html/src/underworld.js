@@ -26,6 +26,55 @@ var CellDoor = Barrier.extend({
     }
 });
 
+var CellSensor = AreaSensor.extend({
+    ctor: function(args)
+    {
+        this._super(args);
+        
+        this.occupancy = 0;
+        this.playerPresent = false;
+        this.closed = false;
+    },
+    init: function()
+    {
+        //Get the barrier with the same number as this sensor.
+        this.barrier = gameObjectSystem.getByName('bar' + this.name.split('sensor')[1]);
+    },
+    onDetect: function(obj)
+    {
+        if(obj.name === 'player')
+        {
+            this.playerPresent = true;
+        }
+        else
+        {
+            ++this.occupancy;
+        }
+    },
+    onEndDetect: function(obj)
+    {
+        if(obj.name === 'player')
+        {
+            this.playerPresent = false;
+        }
+        else
+        {
+            --this.occupancy;
+        }
+    },
+    update: function()
+    {
+        if(this.occupancy > 0 &&
+           !this.closed &&
+           !this.playerPresent &&
+           !this.barrier.isBlocked())
+        {
+            this.barrier.setLocked(true);
+            this.closed = true;
+        }
+    }
+});
+
 var WingedSwarmGatekeeper = Entity.extend({
     mass: Infinity,
     ctor: function(args)

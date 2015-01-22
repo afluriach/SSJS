@@ -70,4 +70,13 @@ function GameObjectSystem()
                 this.objects[objName].update();
         }
     };
+    
+    this.initAll = function()
+    {
+        for(var objName in this.objects)
+        {
+            if(this.objects[objName].init)
+                this.objects[objName].init();
+        }
+    }
 }

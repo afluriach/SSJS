@@ -30,6 +30,7 @@ var GameplayScene = cc.Scene.extend({
         
         this.loadMapObjects();
         this.addWalls();
+        gameObjectSystem.initAll();
         
         cc.director.getScheduler().scheduleUpdateForTarget(this, 0, false);
     },

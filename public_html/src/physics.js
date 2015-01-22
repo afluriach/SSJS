@@ -96,6 +96,21 @@ var Physics = Class.extend({
     {
         this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
+    },
+    rectangleQuery: function(bb, layer, group, func)
+    {
+        this.space.bbQuery(bb, layer, group, func);
+    },
+    isObjectPresentInArea: function(bb, layer, group, exclude)
+    {
+        var objectFound = false;
+        
+        this.rectangleQuery(bb, layer, group, function(shape){
+            if(shape.gameobject !== exclude)
+                objectFound = true;
+        });
+        
+        return objectFound;
     }
 });
 

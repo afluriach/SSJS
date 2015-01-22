@@ -29,16 +29,16 @@
   <object name="bar10" type="CellDoor" x="480" y="704" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="logic">
-  <object name="sensor1" type="AreaSensor" x="960" y="864" width="96" height="96"/>
-  <object name="sensor2" type="AreaSensor" x="960" y="608" width="96" height="96"/>
-  <object name="sensor3" type="AreaSensor" x="832" y="864" width="96" height="96"/>
-  <object name="sensor4" type="AreaSensor" x="832" y="608" width="96" height="96"/>
-  <object name="sensor5" type="AreaSensor" x="704" y="864" width="96" height="96"/>
-  <object name="sensor6" type="AreaSensor" x="704" y="608" width="96" height="96"/>
-  <object name="sensor7" type="AreaSensor" x="576" y="864" width="96" height="96"/>
-  <object name="sensor8" type="AreaSensor" x="576" y="608" width="96" height="96"/>
-  <object name="sensor9" type="AreaSensor" x="448" y="864" width="96" height="96"/>
-  <object name="sensor10" type="AreaSensor" x="447" y="608" width="96" height="96"/>
+  <object name="sensor1" type="CellSensor" x="960" y="864" width="96" height="96"/>
+  <object name="sensor2" type="CellSensor" x="960" y="608" width="96" height="96"/>
+  <object name="sensor3" type="CellSensor" x="832" y="864" width="96" height="96"/>
+  <object name="sensor4" type="CellSensor" x="832" y="608" width="96" height="96"/>
+  <object name="sensor5" type="CellSensor" x="704" y="864" width="96" height="96"/>
+  <object name="sensor6" type="CellSensor" x="704" y="608" width="96" height="96"/>
+  <object name="sensor7" type="CellSensor" x="576" y="864" width="96" height="96"/>
+  <object name="sensor8" type="CellSensor" x="576" y="608" width="96" height="96"/>
+  <object name="sensor9" type="CellSensor" x="448" y="864" width="96" height="96"/>
+  <object name="sensor10" type="CellSensor" x="447" y="608" width="96" height="96"/>
   <object name="gatekeeper_dest" type="MapPos" x="1696" y="832" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="doors">
