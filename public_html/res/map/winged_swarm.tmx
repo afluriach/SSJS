@@ -13,7 +13,7 @@
  </layer>
  <layer name="walls" width="80" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3XbQqCQBAA0D1cWWJf9z9NQkW2GCijNMZ7MMgsujvMj1ksBQAAAAAAcjj1sR9EF8xvE86YG2N7ZtGsnH9bmyP6/Zr0L0b/Ys7lMWPK89kukO/Ke3Yd+jgGa8zcv8y1bcEW+pe5xsy1vWSusZ5/3QJ5Pf/++f5w/8boX4z+xVzK579mG8yvI2c01TvDeTklxvYEAAB+6w4RrYnaADIAAA==
+   H4sIAAAAAAAAA+3X2wqCQBAA0Pm4ssRu//81CRaZmCSjtMY5MMh42R3mYRYjAAAAAACgDKc29r1okvntiz3mxtiapahWzj/dmyP7/Zr0L0f/cs7RzZh4XOsF8l28ZtehjWOyxpL7V3JtW7CF/pVcY8m1PZVc43D+NQvkw/n3z+eH8zdH/3L0L+cS7/+adTK/juxRDd7pR0w8m1oTAAD4rTvu59P9ADIAAA==
   </data>
  </layer>
  <objectgroup name="environment">
@@ -48,7 +48,7 @@
     <property name="locked" value="true"/>
    </properties>
   </object>
-  <object name="entrance" type="UnderworldDoor" x="1376" y="960" width="32" height="32">
+  <object name="entrance" type="UnderworldDoor" x="1440" y="960" width="32" height="32">
    <properties>
     <property name="entrance_dir" value="up"/>
     <property name="locked" value="true"/>
@@ -71,5 +71,6 @@
     <property name="facing" value="left"/>
    </properties>
   </object>
+  <object name="player" type="UnderworldCirno" x="1440" y="896" width="32" height="32"/>
  </objectgroup>
 </map>

@@ -53,8 +53,28 @@ var WingedSwarmGatekeeper = Entity.extend({
                 ++this.dir;
                 
                 if(this.dir == 8) this.dir = 0;
+                this.sprite.setDirection(this.dir);
             }
-            this.sprite.setFrame(this.dir, this.frame);
+            
+            this.sprite.setFrame(this.frame);
         }
     }
+});
+
+var WingedSwarmSpirit = Entity.extend({
+    mass: 3,
+    ctor: function(args)
+    {
+        this._super(args, res.flandre_entity, gameLayers.ground);
+    }
+});
+
+var UnderworldCirno = Player.extend({
+   mass: 3,
+   speed: 3,
+   acceleration: 4.5,
+   ctor: function(args)
+   {
+       this._super(args, res.cirno_entity, gameLayers.ground);
+   }
 });

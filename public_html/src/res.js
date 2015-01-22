@@ -17,6 +17,8 @@ var musicTracks = [
 ];
 
 var entityNames = [
+    'cirno',
+    'flandre',
     'komachi'
 ];
 

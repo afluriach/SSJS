@@ -50,7 +50,10 @@ var EntitySprite = cc.Node.extend({
             this.entityAnimation = entityAnimationsLoaded[animationSpriteRes];
         }
         
-        this.sprite = cc.Sprite.create(this.entityAnimation.animations[0][0]);
+        this.animationIndex = 0;
+        this.frame = 1;
+        
+        this.sprite = cc.Sprite.create(this.entityAnimation.animations[this.animationIndex][this.frame]);
         this.addChild(this.sprite, 1);
     },
     directionToAnimationIndex: function(dir)
@@ -75,11 +78,23 @@ var EntitySprite = cc.Node.extend({
     {
         return dir >= 3 && dir <= 5;
     },
-    setFrame: function(direction, animationFrame)
+    setDirectionFromAngle: function(rad)
     {
-        var animationIdx = this.directionToAnimationIndex(direction);
+        this.setDirection(Math.floor(rad/(Math.PI/4)));
+    },
+    setDirection: function(direction)
+    {
+        this.animationIndex = this.directionToAnimationIndex(direction);
         this.sprite.setFlippedX(this.directionIsFlipped(direction));
-        
-        this.sprite.setSpriteFrame(this.entityAnimation.animations[animationIdx][animationFrame]);
+        this.updateSpriteFrame();
+    },
+    updateSpriteFrame: function()
+    {
+        this.sprite.setSpriteFrame(this.entityAnimation.animations[this.animationIndex][this.frame]);
+    },
+    setFrame: function(frame)
+    {
+        this.frame = frame;
+        this.updateSpriteFrame();
     }
 });

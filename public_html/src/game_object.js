@@ -11,7 +11,12 @@ var GameObject = Class.extend({
     {
         var pos = mapObjToPhysicsPos(args);
         
-        if(!args.mass)
+        if(this.mass)
+        {
+            //use class-defined mass if it is defined
+            args.mass = this.mass;
+        }
+        else if(!args.mass)
         {
             args.mass = -1;
             cc.log(this.name + ': undefined or zero mass, defaulting to static');
@@ -60,6 +65,32 @@ var GameObject = Class.extend({
     getPosPixels: function()
     {
         return this.getPos().mult(pixelsPerTile);
+    },
+    setAngle : function(angle)
+    {
+        this.physicsBody.setAngle(angle);
+    },
+    getAngle : function()
+    {
+        var angle= this.physicsBody.a;
+        
+        if(angle < 0)
+            angle += Math.PI*2;
+        return angle;
+    },
+    getVel : function()
+    {
+        return Vector2.copy(this.physicsBody.getVelAtLocalPoint(cc.p(0,0)));
+    },
+    setVel : function(v)
+    {
+        this.physicsBody.setVel(v.chipmunk());
+    },
+    
+    //the equivalent impulse of applying the force uniformly for one frame
+    applyForceAsImpulse : function(force)
+    {
+        this.physicsBody.applyImpulse(force.mult(secondsPerFrame).chipmunk(), cp.v(0,0));
     },
 
     //create sprite, position it, and add it to the gameplay layer
