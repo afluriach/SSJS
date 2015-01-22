@@ -11,13 +11,18 @@ var MouseListener = cc.EventListener.create({
 //should match the cocos name for the key
 var keys = [
     'w','a','s','d',
-    'i','j','k','l'
+    'i','j','k','l',
+    'escape'
 ];
 
 //map of keycode constants to key names
 var keycodes = {};
 //button state
 var controls = {};
+//was the key down in the last frame?
+var keyHeld = {};
+//was the key pressed this frame?
+var keyPressed = {};
 
 function addKey(keycode, name)
 {
@@ -44,6 +49,14 @@ var KeyListener = cc.EventListener.create({
         if(key in keycodes)
         {
             controls[keycodes[key]] = false;
+        }
+    },
+    update: function()
+    {
+        for(var key in controls)
+        {
+            keyPressed[key] = controls[key] && !keyHeld[key];
+            keyHeld[key] = controls[key];
         }
     }
 });

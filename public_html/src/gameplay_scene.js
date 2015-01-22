@@ -6,7 +6,8 @@ var mapObjectGroups = [
 ];
 
 var gameSceneLayers = {
-    game: 1
+    game: 1,
+    ui: 2
 };
 
 var GameplayScene = cc.Scene.extend({
@@ -18,11 +19,16 @@ var GameplayScene = cc.Scene.extend({
         
         //instance fields
         this.lastScroll = 0;
+        this.paused = false;
         
-        //map layer
+        //gameplay layer
         this.map = new cc.TMXTiledMap(mapRes);
         this.gameplayLayer = new GameplayLayer(this.map);
         this.addChild(this.gameplayLayer, gameSceneLayers.game);
+        
+        //ui layer
+        this.uiLayer = new UILayer();
+        this.addChild(this.uiLayer, gameSceneLayers.ui);
         
         //create new physics, create new game object system, and load objects
         physics = new Physics();
@@ -80,8 +86,37 @@ var GameplayScene = cc.Scene.extend({
     {
         //press is currently not handled
     },
+    onPause: function()
+    {
+        this.uiLayer.showPauseMsg();
+        
+        cc.audioEngine.pauseMusic();
+        cc.audioEngine.pauseAllEffects();
+    },
+    onResume: function()
+    {
+        this.uiLayer.removePauseMsg();
+        
+        cc.audioEngine.resumeMusic();
+        cc.audioEngine.resumeAllEffects();
+    },
     update: function()
     {
+        KeyListener.update();
+        
+        if(keyPressed.escape)
+        {
+            this.paused = !this.paused;
+            
+            if(this.paused)
+                this.onPause();
+            else
+                this.onResume();
+        }
+        
+        if(this.paused)
+            return;
+        
         this.lastScroll += secondsPerFrame;
         
         if(this.lastScroll >= this.scrollInterval)
