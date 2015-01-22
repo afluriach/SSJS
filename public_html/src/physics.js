@@ -5,16 +5,17 @@ var createStaticBody = function()
 	return body;
 };
 
-function Physics()
-{
-    this.space = new cp.Space();
-    this.space.gravity = cp.v(0,0);
-    
-    this.space.intraGroups = {};
-    this.space.intraGroups[PhysicsGroup.agent] = true;
-    
+var Physics = Class.extend({
+    ctor: function()
+    {
+        this.space = new cp.Space();
+        this.space.gravity = cp.v(0,0);
+
+        this.space.intraGroups = {};
+        this.space.intraGroups[PhysicsGroup.agent] = true;
+    },
     //if negative mass is given, treat as infinite (i.e. static body)
-    this.createRectBody = function(center, width, height, mass, gameobject, type, layer, sensor)
+    createRectBody: function(center, width, height, mass, gameobject, type, layer, sensor)
     {
         if(mass < 0)
         {
@@ -42,9 +43,8 @@ function Physics()
         shape.gameobject = gameobject;
         
         return body;
-    };
-    
-    this.createCircleBody = function(center, radius, mass, gameobject, type, layer, sensor)
+    },
+    createCircleBody: function(center, radius, mass, gameobject, type, layer, sensor)
     {
         if(mass < 0)
         {
@@ -72,14 +72,12 @@ function Physics()
         shape.gameobject = gameobject;
         
         return body;
-    };
-    
-    this.update = function()
+    },
+    update: function()
     {
         this.space.step(secondsPerFrame);
-    };
-    
-    this.createWallTile = function(x, y)
+    },
+    createWallTile: function(x, y)
     {
         var body = createStaticBody();
         body.static = true;
@@ -91,9 +89,9 @@ function Physics()
         shape.setCollisionType(PhysicsGroup.wall);
         shape.group = PhysicsGroup.wall;
         shape.layers = PhysicsLayer.all;
-    };
+    }
+});
 
-}
 
 PhysicsLayer = {
     floor: 1,
