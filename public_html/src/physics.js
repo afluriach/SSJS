@@ -13,6 +13,8 @@ var Physics = Class.extend({
 
         this.space.intraGroups = {};
         this.space.intraGroups[PhysicsGroup.agent] = true;
+        
+        this.setCollisionHandlers();
     },
     //if negative mass is given, treat as infinite (i.e. static body)
     createRectBody: function(center, width, height, mass, gameobject, type, layer, sensor)
@@ -89,9 +91,29 @@ var Physics = Class.extend({
         shape.setCollisionType(PhysicsGroup.wall);
         shape.group = PhysicsGroup.wall;
         shape.layers = PhysicsLayer.all;
+    },
+    setCollisionHandlers: function()
+    {
+        this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
+        this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
     }
 });
 
+function agentSensorBegin(arb)
+{
+    var agent = arb.getShapes()[0].gameobject;
+    var sensor = arb.getShapes()[1].gameobject;
+    
+    sensor.onDetect(agent);
+}
+
+function agentSensorEnd(arb)
+{
+    var agent = arb.getShapes()[0].gameobject;
+    var sensor = arb.getShapes()[1].gameobject;
+    
+    sensor.onEndDetect(agent);
+}
 
 PhysicsLayer = {
     floor: 1,

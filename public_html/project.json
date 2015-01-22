@@ -27,6 +27,7 @@
         
         "entity",
         "environment",
+        "sensor",
 
         "underworld"
     ]
