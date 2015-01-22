@@ -17,6 +17,7 @@
         "layer",
         "menu",
         "ui",
+        "dialog_layer",
         
         "app",
         "gameplay_scene",
@@ -29,6 +30,7 @@
         "entity",
         "environment",
         "sensor",
+        "interaction",
 
         "underworld"
     ]

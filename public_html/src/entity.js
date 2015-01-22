@@ -60,15 +60,24 @@ var Entity = GameObject.extend({
 });
 
 var Player = Entity.extend({
+    interactFeelerLength: 2.5,
     ctor: function(args, animationRes, layer)
     {
         this._super(args, animationRes,layer);
+        
+        this.interactible = null;
     },
     update: function()
     {
         this._super();
         this.updateDirection();
         this.applyMoveForce();
+        
+        //check interaction
+        var interactObj = this.getInteractible();
+        this.updateInteractMessage(interactObj);
+        if(interactObj !== null && keyPressed.forwardslash)
+            this.interact(interactObj);
     },
     updateDirection: function()
     {
@@ -98,6 +107,46 @@ var Player = Entity.extend({
         else
         {
             this.applyForceAsImpulse(desiredForce);
+        }
+    },
+    getInteractible: function()
+    {
+        return physics.objectFeeler(
+            this.getPos(),
+            this.interactFeelerLength,
+            this.getAngle(),
+            PhysicsLayer.all,
+            PhysicsGroup.player);
+    },
+    updateInteractMessage: function(obj)
+    {
+        var msg = '';
+        
+        if(obj !== null)
+        {
+            for(var i=0;i<this.actions.length; ++i)
+            {
+                var action = this.actions[i];
+
+                if(action.canInteract(this, obj))
+                {
+                    msg = action.msg;
+                    break;
+                }
+            }
+        }
+        crntScene().uiLayer.setInteractMessage(msg);
+    },
+    interact: function(obj)
+    {
+        if(!this.actions) return;
+        
+        for(var i=0;i<this.actions.length; ++i)
+        {
+            var action = this.actions[i];
+
+            if(action.canInteract(this, obj))
+                action.interact(this, obj);
         }
     }
 });

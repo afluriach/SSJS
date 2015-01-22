@@ -12,7 +12,8 @@ var MouseListener = cc.EventListener.create({
 var keys = [
     'w','a','s','d',
     'i','j','k','l',
-    'escape'
+    'escape',
+    'forwardslash'
 ];
 
 //map of keycode constants to key names

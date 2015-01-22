@@ -80,31 +80,11 @@ var WingedSwarmGatekeeper = Entity.extend({
     ctor: function(args)
     {
         this._super(args, res.komachi_entity, gameLayers.ground);
-
-        this.dir = 0;
-        this.frame = 0;
-        
-        this.animationAccumulator = new Accumulator(0,0.25,this.cycleAnimation.bind(this));
+        this.sprite.setDirection(4);
     },
-    update: function()
+    onTalk: function()
     {
-        //cycle through frames, just for testing
-        this.animationAccumulator.add(secondsPerFrame);
-    },
-    cycleAnimation: function()
-    {
-        ++this.frame;
-
-        if(this.frame == 3)
-        {
-            this.frame = 0;
-            ++this.dir;
-
-            if(this.dir == 8) this.dir = 0;
-            this.sprite.setDirection(this.dir);
-        }
-
-        this.sprite.setFrame(this.frame);
+        crntScene().setDialog(WingedSwarmBefore);
     }
 });
 
@@ -119,6 +99,7 @@ var WingedSwarmSpirit = Entity.extend({
 });
 
 var UnderworldCirno = Player.extend({
+    actions: [Talk],
     mass: 3,
     speed: 3,
     acceleration: 4.5,
@@ -130,3 +111,12 @@ var UnderworldCirno = Player.extend({
         this._super(args, res.cirno_entity, gameLayers.ground);
     }
 });
+
+//dialogs
+var WingedSwarmBefore = [
+    ['Komachi', 'I cannot open the barrier with this swarm of winged monsters flying about.'],
+    ['Cirno', 'They are annoying, but they seem harmless.'],
+    ['Komachi', 'They may seem, but do not let looks deceive. These vampires would wreak havoc if they were to escape to the next level of the underworld.'],
+    ['Cirno', 'The underworld? Is that what this place is?'],
+    ['Komachi', 'Contain this dangerous swarm, and open the barrier to the next level.']
+];

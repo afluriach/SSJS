@@ -82,9 +82,12 @@ var GameplayScene = cc.Scene.extend({
             cc.log("Unknown object type: " + mapObj.type);
         }
     },
-    handlePress: function()
+    handlePress: function(pos)
     {
-        //press is currently not handled
+        if(this.isDialogActive())
+        {
+            this.uiLayer.dialogLayer.handlePress(pos);
+        }
     },
     onPause: function()
     {
@@ -104,7 +107,7 @@ var GameplayScene = cc.Scene.extend({
     {
         KeyListener.update();
         
-        if(keyPressed.escape)
+        if(keyPressed.escape && !this.isDialogActive())
         {
             this.paused = !this.paused;
             
@@ -112,6 +115,12 @@ var GameplayScene = cc.Scene.extend({
                 this.onPause();
             else
                 this.onResume();
+        }
+        
+        if(this.isDialogActive())
+        {
+            this.uiLayer.dialogLayer.update();
+            return;
         }
         
         if(this.paused)
@@ -167,5 +176,13 @@ var GameplayScene = cc.Scene.extend({
                 }
             }
         }
+    },
+    setDialog: function(dialog)
+    {
+        this.uiLayer.dialogLayer.setDialog(dialog);
+    },
+    isDialogActive: function()
+    {
+        return this.uiLayer.dialogLayer.dialog !== null;
     }
 });

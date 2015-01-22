@@ -1,4 +1,35 @@
+var ActionButton = cc.Node.extend({
+    radius: 40,
+    segments: 40,
+    outlineThickness: 5,
+    buttonColor: {r: 72, g: 72, b: 72},
+    ctor: function()
+    {
+        this._super();
+        
+        this.drawNode = cc.DrawNode.create();
+        this.addChild(this.drawNode, 1);
+        
+        this.drawNode.drawDot(cc.p(0,0),this.radius,this.buttonColor);
+        
+        this.actionMessage = cc.LabelTTF.create('', 'Arial', 24);
+        this.addChild(this.actionMessage, 2);
+    }
+});
+
 var UILayer = cc.Layer.extend({
+    ctor: function()
+    {
+        this._super();
+        
+        this.actionButton = new ActionButton();
+        this.actionButton.x = screenSize.width - 50;
+        this.actionButton.y = 50;
+        this.addChild(this.actionButton, 1);
+        
+        this.dialogLayer = new DialogLayer();
+        this.addChild(this.dialogLayer, 2);
+    },
     showPauseMsg: function()
     {
         this.pauseMsg = cc.LabelTTF.create("-PAUSED-", 'Arial', 32);
@@ -11,5 +42,9 @@ var UILayer = cc.Layer.extend({
     {
         this.pauseMsg.removeFromParent();
         delete this.pauseMsg;
+    },
+    setInteractMessage: function(msg)
+    {
+        this.actionButton.actionMessage.string = msg;
     }
 });

@@ -98,3 +98,65 @@ var EntitySprite = cc.Node.extend({
         this.updateSpriteFrame();
     }
 });
+
+function Color(r, g, b, a)
+{
+    return  {r: r, g: g, b: b, a: a || 255 };
+};
+
+function hsva(h, s, v, a)
+{
+    var r1, g1, b1;
+    var C = v*s;
+    var hPrime = h / 60;
+    var x = C*(1-Math.abs(hPrime % 2.0 - 1));
+    var m = v-C;
+    
+    if(s === 0)
+    {
+        //saturation is 0 so hue is undefined and no color will be added
+        r1 = g1 = b1 = 0;
+    }
+    else if(0 <= hPrime && hPrime < 1)
+    {
+        r1 = C;
+        g1 = x;
+        b1 = 0;
+    }
+    else if(1 <= hPrime && hPrime < 2)
+    {
+        r1 = x;
+        g1 = C;
+        b1 = 0;
+    }
+    else if(2 <= hPrime && hPrime < 3)
+    {
+        r1 = 0;
+        g1 = C;
+        b1 = x;
+    }
+    else if(3 <= hPrime && hPrime < 4)
+    {
+        r1 = 0;
+        g1 = x;
+        b1 = C;
+    }
+    else if(4 <= hPrime && hPrime < 5)
+    {
+        r1 = x;
+        g1 = 0;
+        b1 = C;
+    }
+    else if(5 <= hPrime && hPrime < 6)
+    {
+        r1 = C;
+        g1 = 0;
+        b1 = x;
+    }
+    else
+    {
+        throw new Error("Invalid hue given: " + h);
+    }
+    
+    return Color((r1+m)*255, (g1+m)*255, (b1+m)*255, a*255);
+}

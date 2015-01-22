@@ -111,6 +111,17 @@ var Physics = Class.extend({
         });
         
         return objectFound;
+    },
+    objectFeeler: function(start, distance, angle, layers, group)
+    {
+        var end = start.add(Vector2.ray(distance, angle));
+        
+        //Space.prototype.segmentQuery = function(start, end, layers, group, func)
+        var query_info = this.space.segmentQueryFirst(start.chipmunk(),end.chipmunk(),layers,group);
+        
+        if(query_info === null || typeof query_info === 'undefined') return null;
+        if(typeof query_info.shape.gameobject === 'undefined') return null;
+        return query_info.shape.gameobject;
     }
 });
 
