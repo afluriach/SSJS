@@ -10,6 +10,9 @@ function Physics()
     this.space = new cp.Space();
     this.space.gravity = cp.v(0,0);
     
+    this.space.intraGroups = {};
+    this.space.intraGroups[PhysicsGroup.agent] = true;
+    
     //if negative mass is given, treat as infinite (i.e. static body)
     this.createRectBody = function(center, width, height, mass, gameobject, type, layer, sensor)
     {

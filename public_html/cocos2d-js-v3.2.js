@@ -79331,7 +79331,7 @@ Space.prototype.makeCollideShapes = function()
 		if(
 			!(a.bb_l <= b.bb_r && b.bb_l <= a.bb_r && a.bb_b <= b.bb_t && b.bb_b <= a.bb_t)
 			|| a.body === b.body
-			|| (a.group && a.group === b.group)
+			|| (a.group && a.group === b.group && !space_.intraGroups[a.group])
 			|| !(a.layers & b.layers)
 		) return;
 		var handler = space.lookupHandler(a.collision_type, b.collision_type);
