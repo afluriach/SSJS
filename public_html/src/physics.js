@@ -101,6 +101,7 @@ var Physics = Class.extend({
     },
     setCollisionHandlers: function()
     {
+        this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.playerSensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.agent, projectileObjectBegin, null, null, null);
@@ -183,5 +184,6 @@ PhysicsGroup = {
     environment: 3,
     sensor: 4,
     wall: 5,
-    playerProjectile: 6
+    playerProjectile: 6,
+    playerSensor: 7,
 };

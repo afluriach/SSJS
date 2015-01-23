@@ -19,14 +19,14 @@ var AreaSensor = GameObject.extend({
 
 var Radar = GameObject.extend({
     nextID: 1,
-    ctor: function(owner, radius, layer)
+    ctor: function(owner, radius, layer, group)
     {
         this.radius = radius;
         this.owner = owner;
         
         args = {};
         args.layer = layer;
-        args.group = PhysicsGroup.sensor;
+        args.group = group;
         args.sensor = true;
         args.mass = 1;
         args.circle = true;

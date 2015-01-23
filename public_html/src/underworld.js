@@ -103,7 +103,7 @@ var WingedSwarmSpirit = Entity.extend({
         args.group = PhysicsGroup.agent;
         this._super(args, res.entity.flandre, gameLayers.ground);
         
-        this.radar = new Radar(this, this.radarRadius, PhysicsLayer.ground);
+        this.radar = new Radar(this, this.radarRadius, PhysicsLayer.ground, PhysicsGroup.playerSensor);
     },
     onHit: function(obj)
     {
@@ -115,23 +115,17 @@ var WingedSwarmSpirit = Entity.extend({
     },
     onDetect: function(obj)
     {
-        if(obj.name === 'player')
-        {
-            this.player = obj;
-        }
+        this.player = obj;
     },
     onEndDetect: function(obj)
     {
-        if(obj.name === 'player')
-        {
-            delete this.player;
-        }
+        delete this.player;
     },
     update: function()
     {
         this._super();
         
-        if(this.freezeTime)
+        if(isDefined(this.freezeTime))
         {
             this.freezeTime -= secondsPerFrame;
             this.stepAccumulator.set(0);
