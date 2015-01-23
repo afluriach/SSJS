@@ -6,6 +6,6 @@ var Talk = {
     },
     canInteract: function(player, obj)
     {
-        return typeof obj.onTalk !== 'undefined';
+        return isDefined(obj.onTalk);
     }
 };

@@ -1,6 +1,6 @@
 function isDefined(x)
 {
-    return typeof(x !== 'undefined');
+    return typeof x !== 'undefined';
 }
 
 //accumulate a value, and run an action for every interval accumulated
