@@ -17,5 +17,9 @@ var GameplayLayer = cc.Layer.extend({
     move: function(dx, dy)
     {
         this.setPosition(this.getPositionX()-dx, this.getPositionY()-dy);
+    },
+    centerOnTilespacePos: function(pos)
+    {
+        this.setPosition(screenSize.width/2-pixelsPerTile*pos.x, screenSize.height/2-pixelsPerTile*pos.y);
     }
 });

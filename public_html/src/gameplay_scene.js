@@ -18,6 +18,7 @@ var GameplayScene = cc.Scene.extend({
         this._super();
         
         //instance fields
+        this.cameraLockedToPlayer = true;
         this.lastScroll = 0;
         this.paused = false;
         
@@ -126,16 +127,35 @@ var GameplayScene = cc.Scene.extend({
         if(this.paused)
             return;
         
-        this.lastScroll += secondsPerFrame;
-        
-        if(this.lastScroll >= this.scrollInterval)
+        if(keyPressed.cameraLock)
+            this.cameraLockedToPlayer = !this.cameraLockedToPlayer;
+
+        if(!this.cameraLockedToPlayer)
         {
-            if(this.checkCameraScroll())
-                this.lastScroll = 0;
+            this.lastScroll += secondsPerFrame;
+
+            if(this.lastScroll >= this.scrollInterval)
+            {
+                if(this.checkCameraScroll())
+                    this.lastScroll = 0;
+            }
+        }
+        else
+        {
+            this.scrollCameraToTarget('player');
         }
         
         physics.update();
         gameObjectSystem.update();
+    },
+    scrollCameraToTarget: function(name)
+    {
+        var obj = gameObjectSystem.getByName(name);
+        
+        if(obj)
+        {
+            this.gameplayLayer.centerOnTilespacePos(obj.getPos());
+        }
     },
     checkCameraScroll: function()
     {

@@ -18,6 +18,7 @@ var keyAssignments = {
     cameraLeft: 'j',
     cameraDown: 'k',
     cameraRight: 'l',
+    cameraLock: 'm',
     
     pause: 'escape',
     
