@@ -5,6 +5,7 @@ var Entity = GameObject.extend({
     ctor: function(args, animationRes, layer)
     {
         args.circle = true;
+        args.sensor = false;
         
         this._super(args);
         
@@ -55,6 +56,36 @@ var Entity = GameObject.extend({
     {
         this.sprite.setDirection(dir);
         this.setAngle(dir*Math.PI/4);
+    },
+    setDirectionAngle: function(rad)
+    {
+        this.setAngle(rad);
+        
+        rad += Math.PI/8;
+        rad = standardAngleRad(rad);
+        var dir = Math.floor(rad / Math.PI*4);
+        
+        this.sprite.setDirection(dir);
+    },
+    //Apply motor force based on current and desired velocity.
+    applyDesiredVelocity: function(desiredVelocity)
+    {
+        var accel = desiredVelocity.sub(this.getVel());
+        var desiredForce = accel.getUnit().mult(this.acceleration*this.mass);
+
+        //the amount that the velocity will change in one frame if full
+        //acceleration is applied
+        var dv = this.acceleration*secondsPerFrame;
+        
+        if(dv*dv > accel.len2())
+        {
+            //the motor force would overshoot the desired velocity
+            this.setVel(desiredVelocity);
+        }
+        else
+        {
+            this.applyForceAsImpulse(desiredForce);
+        }
     }
 });
 
@@ -105,23 +136,7 @@ var Player = Entity.extend({
     //Find acceleration required to change current velocity to desired.
     applyMoveForce: function()
     {
-        var desiredVelocity = getMoveVector().mult(this.speed);
-        var accel = desiredVelocity.sub(this.getVel());
-        var desiredForce = accel.getUnit().mult(this.acceleration*this.mass);
-
-        //the amount that the velocity will change in one frame if full
-        //acceleration is applied
-        var dv = this.acceleration*secondsPerFrame;
-        
-        if(dv*dv > accel.len2())
-        {
-            //the motor force would overshoot the desired velocity
-            this.setVel(desiredVelocity);
-        }
-        else
-        {
-            this.applyForceAsImpulse(desiredForce);
-        }
+        this.applyDesiredVelocity(getMoveVector().mult(this.speed));
     },
     getInteractible: function()
     {

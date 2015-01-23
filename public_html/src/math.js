@@ -125,3 +125,11 @@ function makeBB(center, width, height)
     return {l: center.x - width/2, r: center.x + width/2,
             b: center.y - height/2, t: center.y + height/2};
 }
+
+function standardAngleRad(rad)
+{
+    while(rad < 0) rad += Math.PI*2;
+    while(rad >= Math.PI*2) rad -= Math.PI*2;
+    
+    return rad;
+}

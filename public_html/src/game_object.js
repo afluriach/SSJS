@@ -93,11 +93,7 @@ var GameObject = Class.extend({
     },
     getAngle : function()
     {
-        var angle= this.physicsBody.a;
-        
-        if(angle < 0)
-            angle += Math.PI*2;
-        return angle;
+        return standardAngleRad(this.physicsBody.a);
     },
     getVel : function()
     {

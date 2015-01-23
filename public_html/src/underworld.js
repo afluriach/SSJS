@@ -94,11 +94,16 @@ var WingedSwarmGatekeeper = Entity.extend({
 
 var WingedSwarmSpirit = Entity.extend({
     mass: 3,
+    radarRadius: 3,
+    acceleration: 5,
+    speed: 5,
     ctor: function(args)
     {
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.agent;
         this._super(args, res.entity.flandre, gameLayers.ground);
+        
+        this.radar = new Radar(this, this.radarRadius, PhysicsLayer.ground);
     },
     onHit: function(obj)
     {
@@ -106,6 +111,20 @@ var WingedSwarmSpirit = Entity.extend({
         {
             this.freezeTime = 4.5;
             this.sprite.setAnimation(res.entity.flandre_frozen);
+        }
+    },
+    onDetect: function(obj)
+    {
+        if(obj.name === 'player')
+        {
+            this.player = obj;
+        }
+    },
+    onEndDetect: function(obj)
+    {
+        if(obj.name === 'player')
+        {
+            delete this.player;
         }
     },
     update: function()
@@ -124,6 +143,14 @@ var WingedSwarmSpirit = Entity.extend({
             }
             else if(this.freezeTime < 2)
                 this.sprite.setAnimation(res.entity.flandre_frozen_ending);
+        }
+        
+        else if(isDefined(this.player))
+        {
+            //flee
+            var dir = this.getPos().sub(this.player.getPos()).getUnit();
+            this.applyDesiredVelocity(dir.mult(this.speed));
+            this.setDirectionAngle(dir.getAngle());
         }
     },
     grabbable: function()

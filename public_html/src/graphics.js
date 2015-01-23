@@ -76,6 +76,11 @@ var EntitySprite = cc.Node.extend({
     },
     setDirection: function(direction)
     {
+        if(direction < 0 || direction >= 8){
+            cc.log('Invalid direction: ' + direction);
+            return;
+        }
+        
         this.animationIndex = this.directionToAnimationIndex(direction);
         this.sprite.setFlippedX(this.directionIsFlipped(direction));
         this.updateSpriteFrame();

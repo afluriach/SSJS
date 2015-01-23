@@ -116,7 +116,7 @@ var Physics = Class.extend({
         var objectFound = false;
         
         this.rectangleQuery(bb, layer, group, function(shape){
-            if(shape.gameobject !== exclude)
+            if(shape.gameobject !== exclude && shape.group !== PhysicsGroup.sensor)
                 objectFound = true;
         });
         

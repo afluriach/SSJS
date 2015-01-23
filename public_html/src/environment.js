@@ -4,6 +4,7 @@ var Door = GameObject.extend({
         args.group = PhysicsGroup.environment;
         args.layer = PhysicsLayer.all;
         args.mass = -1;
+        args.sensor = false;
         
         this._super(args);
         this.sprite_unlocked = sprite_unlocked;
@@ -27,6 +28,7 @@ var Barrier = GameObject.extend({
         args.group = PhysicsGroup.environment;
         args.layer = PhysicsLayer.all;
         args.mass = -1;
+        args.sensor = !locked;
         
         this._super(args);
         
