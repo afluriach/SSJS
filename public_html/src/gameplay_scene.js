@@ -19,7 +19,11 @@ var GameplayScene = cc.Scene.extend({
         
         //instance fields
         this.cameraLockedToPlayer = true;
-        this.lastScroll = 0;
+        this.cameraScrollIntervalDelay = new IntervalDelay(
+            0,
+            this.scrollInterval,
+            this.checkCameraScroll.bind(this)
+        );
         this.paused = false;
         
         //gameplay layer
@@ -132,13 +136,7 @@ var GameplayScene = cc.Scene.extend({
 
         if(!this.cameraLockedToPlayer)
         {
-            this.lastScroll += secondsPerFrame;
-
-            if(this.lastScroll >= this.scrollInterval)
-            {
-                if(this.checkCameraScroll())
-                    this.lastScroll = 0;
-            }
+            this.cameraScrollIntervalDelay.tick(true);
         }
         else
         {

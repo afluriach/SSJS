@@ -27,3 +27,36 @@ var Accumulator = Class.extend({
         this.val = x;
     }
 });
+
+//Require a minimum amount of time between performing an action
+var IntervalDelay = Class.extend({
+    ctor: function(initialDelay, interval, action)
+    {
+        this.remaining =  initialDelay;
+        this.initialDelay = initialDelay;
+        this.interval = interval;
+        this.action = action;
+    },
+    tick: function(tryToPerformAction)
+    {
+        this.remaining -= secondsPerFrame;
+        
+        if(tryToPerformAction && this.remaining <= 0)
+        {
+            this.remaining = this.interval;
+            this.action();
+        }
+    },
+    reset: function()
+    {
+        this.remaining = this.initialDelay;
+    },
+    poll: function()
+    {
+        if(this.remaining <= 0)
+        {
+            this.action();
+            this.remaining = this.interval;
+        }
+    }
+});

@@ -5,6 +5,11 @@ var DialogLayer = cc.Layer.extend({
         this._super();
         
         this.dialog = null;
+        this.advanceFrameIntervalDelay = new IntervalDelay(
+            this.minFrameTime,
+            this.minFrameTime,
+            this.nextFrame.bind(this)
+        );
         
         this.messagePos = new Vector2(screenSize.width/2, 300);
         this.characterPos = new Vector2(screenSize.width/2, 500);
@@ -31,17 +36,16 @@ var DialogLayer = cc.Layer.extend({
     {
         this.dialog = dialog;
         this.dialogFrame = 0;
-        this.frameTime = 0;
         this.frameNum = 0;
+        this.advanceFrameIntervalDelay.reset();
         
         this.loadFrame();
-
         this.drawNode.setVisible(true);
     },
     update: function()
     {
         this.checkControls();
-        this.frameTime += secondsPerFrame;
+        this.advanceFrameIntervalDelay.tick(false);
     },
     //in both cases, advance dialog if the amount of time spent in the current
     //frame is less than the minimum
@@ -51,20 +55,13 @@ var DialogLayer = cc.Layer.extend({
            Math.abs(pos.y - this.messagePos.y) <= this.messageSize.y)
         {
             //if press is within the dialog message box
-            this.checkAdvanceFrame();
+            this.advanceFrameIntervalDelay.poll();
         }
     },
     checkControls: function()
     {
         if(keyPressed.action)
-            this.checkAdvanceFrame();
-    },
-    checkAdvanceFrame: function()
-    {
-        if(this.frameTime >= this.minFrameTime)
-        {
-            this.nextFrame();
-        }
+            this.advanceFrameIntervalDelay.poll();
     },
     nextFrame: function()
     {
