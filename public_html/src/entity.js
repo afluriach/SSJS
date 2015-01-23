@@ -76,7 +76,7 @@ var Player = Entity.extend({
         //check interaction
         var interactObj = this.getInteractible();
         this.updateInteractMessage(interactObj);
-        if(interactObj !== null && keyPressed.forwardslash)
+        if(interactObj !== null && keyPressed.action)
             this.interact(interactObj);
     },
     updateDirection: function()

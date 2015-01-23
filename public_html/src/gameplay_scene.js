@@ -107,7 +107,7 @@ var GameplayScene = cc.Scene.extend({
     {
         KeyListener.update();
         
-        if(keyPressed.escape && !this.isDialogActive())
+        if(keyPressed.pause && !this.isDialogActive())
         {
             this.paused = !this.paused;
             
@@ -144,11 +144,11 @@ var GameplayScene = cc.Scene.extend({
         var dx = 0;
         var dy = 0;
         
-        if(controls.j && !controls.l) dx = -pixelDist;
-        else if(controls.l && !controls.j) dx = pixelDist;
+        if(controls.cameraLeft && !controls.cameraRight) dx = -pixelDist;
+        else if(controls.cameraRight && !controls.cameraLeft) dx = pixelDist;
         
-        if(controls.k && !controls.i) dy = -pixelDist;
-        else if(controls.i && !controls.k) dy = pixelDist;
+        if(controls.cameraDown && !controls.cameraUp) dy = -pixelDist;
+        else if(controls.cameraUp && !controls.cameraDown) dy = pixelDist;
         
         if(dx !== 0 || dy !== 0)
         {

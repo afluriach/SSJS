@@ -56,7 +56,7 @@ var DialogLayer = cc.Layer.extend({
     },
     checkControls: function()
     {
-        if(keyPressed.forwardslash)
+        if(keyPressed.action)
             this.checkAdvanceFrame();
     },
     checkAdvanceFrame: function()

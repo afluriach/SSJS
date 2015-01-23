@@ -8,15 +8,23 @@ var MouseListener = cc.EventListener.create({
     }
 });
 
-//should match the cocos name for the key
-var keys = [
-    'w','a','s','d',
-    'i','j','k','l',
-    'escape',
-    'forwardslash'
-];
+var keyAssignments = {
+    up: 'w',
+    left: 'a',
+    down: 's',
+    right: 'd',
+    
+    cameraUp: 'i',
+    cameraLeft: 'j',
+    cameraDown: 'k',
+    cameraRight: 'l',
+    
+    pause: 'escape',
+    
+    action: 'forwardslash'
+};
 
-//map of keycode constants to key names
+//map of keycode constants to assignment names
 var keycodes = {};
 //button state
 var controls = {};
@@ -31,9 +39,9 @@ function addKey(keycode, name)
     keycodes[keycode] = name;
 }
 
-for(var i=0;i<keys.length; ++i)
+for(var assignment in keyAssignments)
 {
-    addKey(cc.KEY[keys[i]], keys[i]);
+    addKey(cc.KEY[keyAssignments[assignment]], assignment);
 }
 
 var KeyListener = cc.EventListener.create({
@@ -76,11 +84,11 @@ function getMoveVector()
 {
     var v = new Vector2(0,0);
     
-    if(controls.a && !controls.d) v.x = -1;
-    else if(controls.d && !controls.a) v.x = 1;
+    if(controls.left && !controls.right) v.x = -1;
+    else if(controls.right && !controls.left) v.x = 1;
     
-    if(controls.s && !controls.w) v.y = -1;
-    else if(controls.w && !controls.s) v.y = 1;
+    if(controls.down && !controls.up) v.y = -1;
+    else if(controls.up && !controls.down) v.y = 1;
 
     if(v.len2() !== 0)
         return v.getUnit();
