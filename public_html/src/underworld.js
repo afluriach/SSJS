@@ -137,6 +137,7 @@ var IceBlast = GameObject.extend({
     speed: 6,
     radius: 0.4,
     nextID: 1,
+    fadeTime: 0.5,
     ctor: function(pos, angle)
     {
         var args = {};
@@ -156,7 +157,11 @@ var IceBlast = GameObject.extend({
     onHit: function()
     {
         gameObjectSystem.removeObject(this.name);
-        this.sprite.removeFromParent();
+        var fadeAndRemove = cc.sequence(
+            cc.fadeOut(this.fadeTime),
+            cc.removeSelf()
+        );
+        cc.director.getActionManager().addAction(fadeAndRemove, this.sprite, false);
     },
     onHitWall: function()
     {
