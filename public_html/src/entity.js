@@ -20,12 +20,6 @@ var Entity = GameObject.extend({
         this.updateSpritePos();
         this.updateStep();
     },
-    updateSpritePos: function()
-    {
-        var pix = this.getPos().mult(pixelsPerTile);
-        this.sprite.x = pix.x;
-        this.sprite.y = pix.y;
-    },
     updateStep: function()
     {
         var speed = this.getVel().len();
@@ -56,6 +50,11 @@ var Entity = GameObject.extend({
                 this.sprite.setFrame(1);
                 this.leftStep = true;
         }
+    },
+    setDirection: function(dir)
+    {
+        this.sprite.setDirection(dir);
+        this.setAngle(dir*Math.PI/4);
     }
 });
 

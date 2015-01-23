@@ -22,7 +22,8 @@ var keyAssignments = {
     
     pause: 'escape',
     
-    action: 'forwardslash'
+    action: 'forwardslash',
+    spell: 'period'
 };
 
 //map of keycode constants to assignment names

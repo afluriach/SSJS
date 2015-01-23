@@ -4,6 +4,7 @@ var WingedSwarm = GameplayScene.extend({
     {
         this._super(res.winged_swarm_map);
         cc.audioEngine.playMusic(res.see_track, true);
+        this.uiLayer.setSpellIcon(res.ice_blast_sprite);
     }
 });
 
@@ -80,7 +81,7 @@ var WingedSwarmGatekeeper = Entity.extend({
     ctor: function(args)
     {
         this._super(args, res.komachi_entity, gameLayers.ground);
-        this.sprite.setDirection(4);
+        this.setDirection(4);
     },
     onTalk: function()
     {
@@ -98,17 +99,75 @@ var WingedSwarmSpirit = Entity.extend({
     }
 });
 
+var IceBlast = GameObject.extend({
+    mass: 0.3,
+    speed: 6,
+    radius: 0.5,
+    nextID: 1,
+    ctor: function(pos, angle)
+    {
+        var args = {};
+        args.layer = PhysicsLayer.ground;
+        args.group = PhysicsGroup.playerProjectile;
+        args.name = 'ice_blast'+this.nextID++;
+        args.type = 'IceBlast';
+        args.pos = pos;
+        args.circle = true;
+        args.sensor = false;
+        
+        this._super(args);
+        
+        this.sprite = this.createSprite(res.ice_blast_sprite, gameLayers.ground);
+        this.setVel(Vector2.ray(this.speed,angle));
+    },
+    onHit: function()
+    {
+        gameObjectSystem.removeObject(this.name);
+        this.sprite.removeFromParent();
+    },
+    onHitWall: function()
+    {
+        this.onHit();
+    },
+    update: function()
+    {
+        this.updateSpritePos();
+    }
+});
+
 var UnderworldCirno = Player.extend({
     actions: [Talk],
     mass: 3,
     speed: 3,
     acceleration: 4.5,
+    spellInterval: 1.5,
+    spawnBlastDistance: 0.75,
     ctor: function(args)
     {
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.player;
 
         this._super(args, res.cirno_entity, gameLayers.ground);
+        
+        this.spellDelayInterval = new IntervalDelay(
+            0,
+            this.spellInterval,
+            this.iceBlast.bind(this)
+        );
+
+        this.setDirection(2);
+    },
+    update: function()
+    {
+        this._super();
+        this.spellDelayInterval.tick(keyPressed.spell);
+    },
+    iceBlast: function()
+    {
+        var pos = this.getPos().add(Vector2.ray(this.spawnBlastDistance, this.getAngle()));
+        var blast = new IceBlast(pos, this.getAngle());
+        
+        gameObjectSystem.addObject(blast);
     }
 });
 

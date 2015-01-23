@@ -75,6 +75,13 @@ var Physics = Class.extend({
         
         return body;
     },
+    removeBody: function(body)
+    {
+        if(!body.static)
+            this.space.removeBody(body);
+        
+        this.space.removeShape(body.shape);
+    },
     update: function()
     {
         this.space.step(secondsPerFrame);
@@ -96,6 +103,9 @@ var Physics = Class.extend({
     {
         this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
+        this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.agent, projectileObjectBegin, null, null, null);
+        this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.wall, projectileWallBegin, null, null, null);
+        this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.environment, projectileObjectBegin, null, null, null);
     },
     rectangleQuery: function(bb, layer, group, func)
     {
@@ -140,6 +150,24 @@ function agentSensorEnd(arb)
     
     sensor.onEndDetect(agent);
 }
+function projectileObjectBegin(arb)
+{
+    var proj = arb.getShapes()[0].gameobject;
+    var obj = arb.getShapes()[1].gameobject;
+    
+    if(isDefined(obj.onHit))
+        obj.onHit(proj);
+    if(isDefined(proj.onHit))
+        proj.onHit(obj);
+}
+
+function projectileWallBegin(arb)
+{
+    var proj = arb.getShapes()[0].gameobject;
+    
+    if(isDefined(proj.onHit))
+        proj.onHitWall();
+}
 
 PhysicsLayer = {
     floor: 1,
@@ -154,5 +182,6 @@ PhysicsGroup = {
     agent: 2,
     environment: 3,
     sensor: 4,
-    wall: 5
+    wall: 5,
+    playerProjectile: 6
 };

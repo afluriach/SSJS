@@ -7,6 +7,7 @@ var mapNames = [
 ];
 
 var spriteNames = [
+    'ice_blast',
     'cell_door',
     'underworld_door_locked',
     'underworld_door_unlocked'

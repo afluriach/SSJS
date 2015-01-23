@@ -9,7 +9,11 @@ var GameObject = Class.extend({
     //check parameters and create physics body
     createPhysicsBody: function(args)
     {
-        var pos = mapObjToPhysicsPos(args);
+        var pos;
+        if(args.pos)
+            pos = args.pos;
+        else
+            pos = mapObjToPhysicsPos(args);
         
         if(this.mass)
         {
@@ -137,4 +141,14 @@ var GameObject = Class.extend({
         
         return v;
     },
+    updateSpritePos: function()
+    {
+        var pix = this.getPos().mult(pixelsPerTile);
+        this.sprite.x = pix.x;
+        this.sprite.y = pix.y;
+    },
+    onRemove: function()
+    {
+        physics.removeBody(this.physicsBody);
+    }
 });
