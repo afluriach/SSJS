@@ -90,7 +90,7 @@ var Entity = GameObject.extend({
 });
 
 var Player = Entity.extend({
-    interactFeelerLength: 2.5,
+    interactFeelerLength: 1,
     //displacement from the player's center where the item will be held
     holdDist: 0.2,
     placeDist: 1,
