@@ -5,6 +5,8 @@ var WingedSwarm = GameplayScene.extend({
         this._super(res.map.winged_swarm);
         cc.audioEngine.playMusic(res.track.see, true);
         this.uiLayer.setSpellIcon(res.sprite.ice_blast);
+        
+        this.spiritsContained = 0;
     }
 });
 
@@ -72,6 +74,7 @@ var CellSensor = AreaSensor.extend({
         {
             this.barrier.setLocked(true);
             this.closed = true;
+            crntScene().spiritsContained += this.occupancy;
         }
     }
 });
@@ -85,7 +88,7 @@ var WingedSwarmGatekeeper = Entity.extend({
     },
     onTalk: function()
     {
-        crntScene().setDialog(WingedSwarmBefore);
+        crntScene().setDialog(crntScene().spiritsContained < 10 ? WingedSwarmBefore : WingedSwarmAfter);
     }
 });
 
@@ -96,13 +99,43 @@ var WingedSwarmSpirit = Entity.extend({
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.agent;
         this._super(args, res.entity.flandre, gameLayers.ground);
+    },
+    onHit: function(obj)
+    {
+        if(obj instanceof IceBlast)
+        {
+            this.freezeTime = 4.5;
+            this.sprite.setAnimation(res.entity.flandre_frozen);
+        }
+    },
+    update: function()
+    {
+        this._super();
+        
+        if(this.freezeTime)
+        {
+            this.freezeTime -= secondsPerFrame;
+            this.stepAccumulator.set(0);
+            
+            if(this.freezeTime < 0)
+            {
+                this.sprite.setAnimation(res.entity.flandre);
+                delete this.freezeTime;
+            }
+            else if(this.freezeTime < 2)
+                this.sprite.setAnimation(res.entity.flandre_frozen_ending);
+        }
+    },
+    grabbable: function()
+    {
+        return isDefined(this.freezeTime);
     }
 });
 
 var IceBlast = GameObject.extend({
     mass: 0.3,
     speed: 6,
-    radius: 0.5,
+    radius: 0.4,
     nextID: 1,
     ctor: function(pos, angle)
     {
@@ -136,7 +169,7 @@ var IceBlast = GameObject.extend({
 });
 
 var UnderworldCirno = Player.extend({
-    actions: [Talk],
+    actions: [Talk, Grab],
     mass: 3,
     speed: 3,
     acceleration: 4.5,
@@ -177,5 +210,13 @@ var WingedSwarmBefore = [
     ['Cirno', 'They are annoying, but they seem harmless.'],
     ['Komachi', 'They may seem, but do not let looks deceive. These vampires would wreak havoc if they were to escape to the next level of the underworld.'],
     ['Cirno', 'The underworld? Is that what this place is?'],
-    ['Komachi', 'Contain this dangerous swarm, and open the barrier to the next level.']
+    ['Komachi', 'I just want to pick these spirits up and throw them.']
+];
+
+var WingedSwarmAfter = [
+    ['Komachi', 'Sometimes I wish I had ice powers.'],
+    ['Cirno', 'Yeah, aren\'t they the greatest?'],
+    ['Komachi', 'In any case, the troublesome spirits have been contained'],
+    ['Komachi', '...'],
+    ['Komachi', 'Some things can\'t be tamed with ice.']
 ];

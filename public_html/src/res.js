@@ -23,6 +23,8 @@ var musicTracks = [
 var entityNames = [
     'cirno',
     'flandre',
+    'flandre_frozen',
+    'flandre_frozen_ending',
     'komachi'
 ];
 

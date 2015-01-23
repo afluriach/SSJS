@@ -119,3 +119,9 @@ function mapObjToPhysicsPos(obj)
 {
    return pixelCoordToPhysics(parseInt(obj.x)+obj.width/2, parseInt(obj.y)+obj.height/2);
 };
+
+function makeBB(center, width, height)
+{
+    return {l: center.x - width/2, r: center.x + width/2,
+            b: center.y - height/2, t: center.y + height/2};
+}

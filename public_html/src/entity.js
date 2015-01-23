@@ -60,23 +60,38 @@ var Entity = GameObject.extend({
 
 var Player = Entity.extend({
     interactFeelerLength: 2.5,
+    //displacement from the player's center where the item will be held
+    holdDist: 0.2,
+    placeDist: 1,
     ctor: function(args, animationRes, layer)
     {
         this._super(args, animationRes,layer);
         
         this.interactible = null;
+        this.holdingItem = null;
     },
     update: function()
     {
         this._super();
         this.updateDirection();
         this.applyMoveForce();
-        
-        //check interaction
-        var interactObj = this.getInteractible();
-        this.updateInteractMessage(interactObj);
-        if(interactObj !== null && keyPressed.action)
-            this.interact(interactObj);
+
+        if(this.holdingItem)
+        {
+            crntScene().uiLayer.setInteractMessage('Drop');
+            this.holdingItem.setPos(this.grabPos());
+            
+            if(keyPressed.action && this.canDrop())
+                this.drop();
+        }
+        else
+        {
+            //check interaction
+            var interactObj = this.getInteractible();
+            this.updateInteractMessage(interactObj);
+            if(interactObj !== null && keyPressed.action)
+                this.interact(interactObj);
+        }
     },
     updateDirection: function()
     {
@@ -120,7 +135,7 @@ var Player = Entity.extend({
     updateInteractMessage: function(obj)
     {
         var msg = '';
-        
+
         if(obj !== null)
         {
             for(var i=0;i<this.actions.length; ++i)
@@ -147,5 +162,37 @@ var Player = Entity.extend({
             if(action.canInteract(this, obj))
                 action.interact(this, obj);
         }
+    },
+    grab: function(obj)
+    {
+        this.holdingItem = obj;
+        
+        obj.sprite.removeFromParent();
+        crntScene().gameplayLayer.addChild(obj.sprite, gameLayers.air);
+        
+        obj.setPos(this.grabPos());
+        obj.setSensor(true);
+    },
+    grabPos: function()
+    {
+        return this.getPos().add(Vector2.ray(this.holdDist, this.getAngle()));
+    },
+    dropPos: function()
+    {
+        return this.getPos().add(Vector2.ray(this.placeDist, this.getAngle()));
+    },
+    canDrop: function()
+    {
+        return physics.isObjectPresentInArea(makeBB(this.dropPos(), 1, 1), PhysicsLayer.ground, 0, null);
+    },
+    drop: function()
+    {
+        this.holdingItem.sprite.removeFromParent();
+        crntScene().gameplayLayer.addChild(this.holdingItem.sprite, gameLayers.ground);
+        
+        this.holdingItem.setPos(this.dropPos());
+        this.holdingItem.setSensor(false);
+        
+        this.holdingItem = null;
     }
 });

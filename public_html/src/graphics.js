@@ -40,15 +40,7 @@ var EntitySprite = cc.Node.extend({
     {
         this._super();
         
-        if(entityAnimationsLoaded[animationSpriteRes])
-        {
-            this.entityAnimation = entityAnimationsLoaded[animationSpriteRes];
-        }
-        else
-        {
-            entityAnimationsLoaded[animationSpriteRes] = new EntityAnimation(animationSpriteRes);
-            this.entityAnimation = entityAnimationsLoaded[animationSpriteRes];
-        }
+        this.setAnimation(animationSpriteRes);
         
         this.animationIndex = 0;
         this.frame = 1;
@@ -96,6 +88,18 @@ var EntitySprite = cc.Node.extend({
     {
         this.frame = frame;
         this.updateSpriteFrame();
+    },
+    setAnimation: function(res)
+    {
+        if(entityAnimationsLoaded[res])
+        {
+            this.entityAnimation = entityAnimationsLoaded[res];
+        }
+        else
+        {
+            entityAnimationsLoaded[res] = new EntityAnimation(res);
+            this.entityAnimation = entityAnimationsLoaded[res];
+        }
     }
 });
 

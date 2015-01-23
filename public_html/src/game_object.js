@@ -78,6 +78,10 @@ var GameObject = Class.extend({
     {
         return Vector2.copy(this.physicsBody.getPos());
     },
+    setPos: function(pos)
+    {
+        this.physicsBody.setPos(pos.chipmunk());
+    },
     
     getPosPixels: function()
     {
