@@ -2,6 +2,9 @@
 var res = {
 };
 
+//list of all resource paths
+var res_list = [];
+
 var mapNames = [
     'winged_swarm'
 ];
@@ -23,23 +26,17 @@ var entityNames = [
     'komachi'
 ];
 
-function addResources(res_names, path, suffix, extension)
+function addResources(res_names, path, type, extension)
 {
+    res[type] = {};
     for(var i=0;i<res_names.length; ++i)
     {
-        res[res_names[i]+suffix] = path+res_names[i]+extension;
+        res[type][res_names[i]] = path+res_names[i]+extension;
+        res_list.push(res[type][res_names[i]]);
     }
 }
 
-addResources(mapNames, 'res/map/', '_map', '.tmx');
-addResources(spriteNames, 'res/sprite/', '_sprite', '.png');
-addResources(entityNames, 'res/entity/', '_entity', '.png');
-addResources(musicTracks, 'res/music/', '_track', '.ogg');
-
-//list of all resource paths
-var res_list = [];
-
-for(var name in res)
-{
-    res_list.push(res[name]);
-}
+addResources(mapNames, 'res/map/', 'map', '.tmx');
+addResources(spriteNames, 'res/sprite/', 'sprite', '.png');
+addResources(entityNames, 'res/entity/', 'entity', '.png');
+addResources(musicTracks, 'res/music/', 'track', '.ogg');

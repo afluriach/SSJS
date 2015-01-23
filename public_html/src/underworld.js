@@ -2,9 +2,9 @@
 var WingedSwarm = GameplayScene.extend({
     onEnter: function()
     {
-        this._super(res.winged_swarm_map);
-        cc.audioEngine.playMusic(res.see_track, true);
-        this.uiLayer.setSpellIcon(res.ice_blast_sprite);
+        this._super(res.map.winged_swarm);
+        cc.audioEngine.playMusic(res.track.see, true);
+        this.uiLayer.setSpellIcon(res.sprite.ice_blast);
     }
 });
 
@@ -14,8 +14,8 @@ var UnderworldDoor = Door.extend({
     {
         this._super(
             args,
-            res.underworld_door_unlocked_sprite,
-            res.underworld_door_locked_sprite,
+            res.sprite.underworld_door_unlocked,
+            res.sprite.underworld_door_locked,
             true);
     }
 });
@@ -23,7 +23,7 @@ var UnderworldDoor = Door.extend({
 var CellDoor = Barrier.extend({
     ctor: function(args)
     {
-        this._super(args, res.cell_door_sprite, false);
+        this._super(args, res.sprite.cell_door, false);
     }
 });
 
@@ -80,7 +80,7 @@ var WingedSwarmGatekeeper = Entity.extend({
     mass: Infinity,
     ctor: function(args)
     {
-        this._super(args, res.komachi_entity, gameLayers.ground);
+        this._super(args, res.entity.komachi, gameLayers.ground);
         this.setDirection(4);
     },
     onTalk: function()
@@ -95,7 +95,7 @@ var WingedSwarmSpirit = Entity.extend({
     {
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.agent;
-        this._super(args, res.flandre_entity, gameLayers.ground);
+        this._super(args, res.entity.flandre, gameLayers.ground);
     }
 });
 
@@ -117,7 +117,7 @@ var IceBlast = GameObject.extend({
         
         this._super(args);
         
-        this.sprite = this.createSprite(res.ice_blast_sprite, gameLayers.ground);
+        this.sprite = this.createSprite(res.sprite.ice_blast, gameLayers.ground);
         this.setVel(Vector2.ray(this.speed,angle));
     },
     onHit: function()
@@ -147,7 +147,7 @@ var UnderworldCirno = Player.extend({
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.player;
 
-        this._super(args, res.cirno_entity, gameLayers.ground);
+        this._super(args, res.entity.cirno, gameLayers.ground);
         
         this.spellDelayInterval = new IntervalDelay(
             0,
