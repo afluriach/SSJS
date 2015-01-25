@@ -51,9 +51,11 @@ var IceBlast = {
 };
 
 var SpiritCamera = {
-    cameraSize: 8,
+    photoSize: 8,
+    photoDistance: 1.5,
     cooldown: 0,
     cast: function(player){
-        inventory.addPhoto(crntScene().getShot(8));
+        var photoPos = player.getPos().add(player.getFacingDir().mult(this.photoDistance + this.photoSize/2));
+        inventory.addPhoto(crntScene().getShot(this.photoSize, photoPos));
     }
 };

@@ -202,29 +202,11 @@ var GameplayScene = cc.Scene.extend({
             }
         }
     },
-    moveGameplayLayerForShot: function(tileSize)
+    getShot: function(sizeTiles, center)
     {
-        var hs = tileSize*pixelsPerTile/2;
-        
-        var dx = screenSize.width/2 - hs;
-        var dy = screenSize.height/2 - hs;
-        
-        this.gameplayLayer.move(dx, dy);
-    },
-    unmoveGameplayLayerForShot: function(tileSize)
-    {
-        var hs = tileSize*pixelsPerTile/2;
-        
-        var dx = screenSize.width/2 - hs;
-        var dy = screenSize.height/2 - hs;
-        
-        this.gameplayLayer.move(-dx, -dy);
-    },
-    getShot: function(sizeTiles)
-    {
-        this.moveGameplayLayerForShot(sizeTiles);
+        this.gameplayLayer.moveForPhoto(sizeTiles, center);
         var rtx = this.getScreenshot(sizeTiles*pixelsPerTile, sizeTiles*pixelsPerTile);
-        this.unmoveGameplayLayerForShot(sizeTiles);
+        this.gameplayLayer.unmove(sizeTiles, center);
 
         return rtx;
     },

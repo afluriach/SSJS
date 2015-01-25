@@ -117,6 +117,10 @@ var GameObject = Class.extend({
     {
         return standardAngleRad(this.physicsBody.a);
     },
+    getFacingDir: function()
+    {
+        return Vector2.ray(1, this.getAngle());
+    },
     getVel : function()
     {
         return Vector2.copy(this.physicsBody.getVelAtLocalPoint(cc.p(0,0)));
