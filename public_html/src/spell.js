@@ -2,14 +2,13 @@ var IceBlastBullet = GameObject.extend({
     mass: 0.3,
     speed: 6,
     radius: 0.4,
-    nextID: 1,
     fadeTime: 0.5,
     ctor: function(pos, angle)
     {
         var args = {};
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.playerProjectile;
-        args.name = 'ice_blast'+this.nextID++;
+        args.name = 'ice_blast';
         args.type = 'IceBlastBullet';
         args.pos = pos;
         args.circle = true;
@@ -22,7 +21,7 @@ var IceBlastBullet = GameObject.extend({
     },
     onHit: function()
     {
-        gameObjectSystem.removeObject(this.name);
+        gameObjectSystem.removeObject(this);
         var fadeAndRemove = cc.sequence(
             cc.fadeOut(this.fadeTime),
             cc.removeSelf()

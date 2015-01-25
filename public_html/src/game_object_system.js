@@ -1,11 +1,13 @@
 var GameObjectSystem = Class.extend({
     ctor: function(){
         this.objects = {};
+        this.nameMap = {};
+        
         this.toAdd = {};
         this.toRemove = {};
     },
     getByName: function(name){
-        return this.objects[name];
+        return this.nameMap[name];
     },
     update: function(){
         this.handleRemovals();
@@ -13,41 +15,44 @@ var GameObjectSystem = Class.extend({
         this.handleAdditions();        
     },
     handleRemovals: function(){
-        for(var name in this.toRemove)
+        for(var uid in this.toRemove)
         {
-            this.objects[name].onRemove();
+            this.objects[uid].onRemove();
 
-            delete this.objects[name];
-            delete this.toRemove[name];
+            delete this.nameMap[this.objects[uid].name];
+            delete this.objects[uid];
+            delete this.toRemove[uid];
         }
     },
     handleAdditions: function(){
-        for(var name in this.toAdd)
+        for(var uid in this.toAdd)
         {
-            this.objects[name] = this.toAdd[name];
-            delete this.toAdd[name];
+            this.objects[uid] = this.toAdd[uid];
+            this.nameMap[this.objects[uid].name] = this.objects[uid];
+            delete this.toAdd[uid];
         }
     },
     addObject: function(obj){
-        this.toAdd[obj.name] = obj;
+        this.toAdd[obj.uid] = obj;
     },
-    removeObject: function(objName){
-        this.toRemove[objName] = true;
-        
-        var obj = this.objects[objName];
+    removeObject: function(obj){
+        this.toRemove[obj.uid] = true;
+    },
+    removeObjectByUid: function(uid){
+        this.toRemove[uid] = true;
     },
     updateAll: function(){
-        for(var objName in this.objects)
+        for(var uid in this.objects)
         {
-            if(this.objects[objName].update)
-                this.objects[objName].update();
+            if(this.objects[uid].update)
+                this.objects[uid].update();
         }
     },
     initAll: function(){
-        for(var objName in this.objects)
+        for(var uid in this.objects)
         {
-            if(this.objects[objName].init)
-                this.objects[objName].init();
+            if(this.objects[uid].init)
+                this.objects[uid].init();
         }
     }
 });

@@ -3,6 +3,7 @@ var GameObject = Class.extend({
     {
         this.name = args.name;
         this.type = args.type;
+        this.uid = GameObject.nextUID++;
         
         this.createPhysicsBody(args);
     },
@@ -188,3 +189,5 @@ var GameObject = Class.extend({
         physics.removeBody(this.physicsBody);
     }
 });
+
+GameObject.nextUID = 1;
