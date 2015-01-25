@@ -21,6 +21,7 @@ var keyAssignments = {
     cameraLock: 'm',
     
     pause: 'escape',
+    inventory: 'e',
     
     action: 'forwardslash',
     spell: 'period'

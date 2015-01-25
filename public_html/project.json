@@ -18,6 +18,7 @@
         "menu",
         "ui",
         "dialog_layer",
+        "inventory",
         
         "app",
         "gameplay_scene",

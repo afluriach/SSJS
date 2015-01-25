@@ -5,6 +5,7 @@ var secondsPerFrame = 1.0/framesPerSecond;
 //global singleton classes
 var physics;
 var gameObjectSystem;
+var intenvory;
 
 function init()
 {

@@ -44,6 +44,8 @@ var GameplayScene = cc.Scene.extend({
         gameObjectSystem.initAll();
         
         cc.director.getScheduler().scheduleUpdateForTarget(this, 0, false);
+        
+        inventory = new Inventory();
     },
     loadMapObjects: function()
     {
@@ -112,7 +114,7 @@ var GameplayScene = cc.Scene.extend({
     {
         KeyListener.update();
         
-        if(keyPressed.pause && !this.isDialogActive())
+        if(keyPressed.pause && !this.isDialogActive() && !this.uiLayer.isInventoryOpen())
         {
             this.paused = !this.paused;
             
@@ -122,13 +124,18 @@ var GameplayScene = cc.Scene.extend({
                 this.onResume();
         }
         
+        if(!this.paused && keyPressed.inventory)
+        {
+            this.uiLayer.toggleInventory();
+        }
+        
         if(this.isDialogActive())
         {
             this.uiLayer.dialogLayer.update();
             return;
         }
         
-        if(this.paused)
+        if(this.paused || this.uiLayer.isInventoryOpen())
             return;
         
         if(keyPressed.cameraLock)
@@ -194,6 +201,42 @@ var GameplayScene = cc.Scene.extend({
                 }
             }
         }
+    },
+    moveGameplayLayerForShot: function(tileSize)
+    {
+        var hs = tileSize*pixelsPerTile/2;
+        
+        var dx = screenSize.width/2 - hs;
+        var dy = screenSize.height/2 - hs;
+        
+        this.gameplayLayer.move(dx, dy);
+    },
+    unmoveGameplayLayerForShot: function(tileSize)
+    {
+        var hs = tileSize*pixelsPerTile/2;
+        
+        var dx = screenSize.width/2 - hs;
+        var dy = screenSize.height/2 - hs;
+        
+        this.gameplayLayer.move(-dx, -dy);
+    },
+    getShot: function(sizeTiles)
+    {
+        this.moveGameplayLayerForShot(sizeTiles);
+        var rtx = this.getScreenshot(sizeTiles*pixelsPerTile, sizeTiles*pixelsPerTile);
+        this.unmoveGameplayLayerForShot(sizeTiles);
+
+        return rtx;
+    },
+    getScreenshot: function(width, height)
+    {
+        var rtx = new cc.RenderTexture();
+        rtx.initWithWidthAndHeight(width, height);
+        rtx.begin();
+        this.gameplayLayer.visit();
+        rtx.end();
+        
+        return rtx;
     },
     setDialog: function(dialog)
     {
