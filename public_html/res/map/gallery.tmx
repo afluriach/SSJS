@@ -13,7 +13,7 @@
  </layer>
  <layer name="wall" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt17EOgCAMRVEY9P8/WQcHQ6ipEsqzuSdhQRFri2gpAAAAAAAAABCjnm27Wn3oU7cPHldBHPHu9d42z/qwxkWb8UxX5Ik4Yq+5Yk7i0JqTOL4b3QN645X2D++99Mavysebfs95f/kOVpQlH1Yte2tcZX1kiSPLe9cykg8lxKGlrfvef23UWjgAmicB1Q==
+   eJzt17EOgCAMRVEY9P8/WQcHQ4qpEsqzuSdhQZCUgmApAAAAAAAAABCjnmW7Sn2oU7cPPldBHPHu670tnv3R6xdtxpyuyBNxxL5zxZjEoTUmcXw3egZY/ZXOD++cWu1W5eNNvafdX+7BirLkI8v+yBJHlu9uz0g+lBCHlnbdW/+1UXvhAMPzAdo=
   </data>
  </layer>
  <objectgroup name="agents">
