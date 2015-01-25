@@ -96,6 +96,8 @@ var Player = Entity.extend({
     placeDist: 1,
     ctor: function(args, animationRes, layer)
     {
+        args.group = PhysicsGroup.player;
+
         this._super(args, animationRes,layer);
         
         this.interactible = null;

@@ -204,8 +204,7 @@ var UnderworldCirno = Player.extend({
     ctor: function(args)
     {
         args.layer = PhysicsLayer.ground;
-        args.group = PhysicsGroup.player;
-
+        
         this._super(args, res.entity.cirno, gameLayers.ground);
         
         this.spellDelayInterval = new IntervalDelay(
