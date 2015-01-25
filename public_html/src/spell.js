@@ -43,7 +43,7 @@ var IceBlast = {
     cooldown: 1.5,
     spawnBlastDistance: 0.75,
     cast: function(player){
-        var pos = player.getPos().add(Vector2.ray(this.spawnBlastDistance, player.getAngle()));
+        var pos = player.getFacingPoint(this.spawnBlastDistance, player.getAngle());
         var blast = new IceBlastBullet(pos, player.getAngle());
         
         gameObjectSystem.addObject(blast);
@@ -55,7 +55,7 @@ var SpiritCamera = {
     photoDistance: 1.5,
     cooldown: 0,
     cast: function(player){
-        var photoPos = player.getPos().add(player.getFacingDir().mult(this.photoDistance + this.photoSize/2));
+        var photoPos = player.getFacingPoint(this.photoDistance + this.photoSize/2);
         inventory.addPhoto(crntScene().getShot(this.photoSize, photoPos));
     }
 };

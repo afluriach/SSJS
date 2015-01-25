@@ -121,6 +121,11 @@ var GameObject = Class.extend({
     {
         return Vector2.ray(1, this.getAngle());
     },
+    //Get point the specified distance in front of the object.
+    getFacingPoint: function(distance)
+    {
+        return this.getPos().add(Vector2.ray(distance, this.getAngle()));
+    },
     getVel : function()
     {
         return Vector2.copy(this.physicsBody.getVelAtLocalPoint(cc.p(0,0)));
