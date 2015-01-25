@@ -79,11 +79,10 @@ var CellSensor = AreaSensor.extend({
     }
 });
 
-var WingedSwarmGatekeeper = Entity.extend({
-    mass: Infinity,
+var WingedSwarmGatekeeper = NPC.extend({
     ctor: function(args)
     {
-        this._super(args, res.entity.komachi, gameLayers.ground);
+        this._super(args, res.entity.komachi);
     },
     onTalk: function()
     {

@@ -218,3 +218,15 @@ var Player = Entity.extend({
         this.holdingItem = null;
     }
 });
+
+var NPC = Entity.extend({
+    mass: Infinity,
+    ctor: function(args, spriteRes)
+    {
+        this._super(args, spriteRes, gameLayers.ground);
+    },
+    onTalk: function()
+    {
+        crntScene().setDialog(this.dialog);
+    }
+});

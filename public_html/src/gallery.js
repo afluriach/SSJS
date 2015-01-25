@@ -32,41 +32,26 @@ var GalleryAya = Player.extend({
     }
 });
 
-var GalleryReimu = Entity.extend({
-    mass: Infinity,
+var GalleryReimu = NPC.extend({
     dialog: [['Reimu', 'Give me something powerful.']],
     ctor: function(args)
     {
-        this._super(args, res.entity.reimu, gameLayers.ground);
-    },
-    onTalk: function()
-    {
-        crntScene().setDialog(this.dialog);
+        this._super(args, res.entity.reimu);
     }
 });
 
-var GalleryCirno = Entity.extend({
-    mass: Infinity,
+var GalleryCirno = NPC.extend({
     dialog: [['Cirno', 'Give me something cold.']],
     ctor: function(args)
     {
-        this._super(args, res.entity.cirno, gameLayers.ground);
-    },
-    onTalk: function()
-    {
-        crntScene().setDialog(this.dialog);
+        this._super(args, res.entity.cirno);
     }
 });
-var GallerySanae = Entity.extend({
-    mass: Infinity,
+var GallerySanae = NPC.extend({
     dialog: [['Sanae', 'Give me something holy.']],
     ctor: function(args)
     {
-        this._super(args, res.entity.sanae, gameLayers.ground);
-    },
-    onTalk: function()
-    {
-        crntScene().setDialog(this.dialog);
+        this._super(args, res.entity.sanae);
     }
 });
 
