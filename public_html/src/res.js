@@ -6,12 +6,19 @@ var res = {
 var res_list = [];
 
 var mapNames = [
+    'gallery',
     'winged_swarm'
 ];
 
 var spriteNames = [
+    'blue_jar',
+    'green_jar',
+    'red_jar',
+    
     'ice_blast',
+    
     'cell_door',
+    'gallery_barrier',
     'underworld_door_locked',
     'underworld_door_unlocked'
 ];
@@ -21,11 +28,14 @@ var musicTracks = [
 ];
 
 var entityNames = [
+    'aya',
     'cirno',
     'flandre',
     'flandre_frozen',
     'flandre_frozen_ending',
-    'komachi'
+    'komachi',
+    'reimu',
+    'sanae'
 ];
 
 function addResources(res_names, path, type, extension)

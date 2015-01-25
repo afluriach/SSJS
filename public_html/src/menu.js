@@ -81,6 +81,15 @@ var LevelSelectMenu = MenuScene.extend({
         );
 
         this.textLayer.addLabel(
+            'Gallery',
+            'gallery',
+            new Vector2(screenSize.width/2, screenSize.height - 250),
+            function(){
+                cc.director.runScene(new GalleryScene());
+            }
+        );
+
+        this.textLayer.addLabel(
             'Back',
             'back',
             new Vector2(screenSize.width/2, 100),

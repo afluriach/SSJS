@@ -47,3 +47,34 @@ var Barrier = GameObject.extend({
         return physics.isObjectPresentInArea(this.getBB(), PhysicsLayer.all, 0, this);
     }
 });
+
+var DynamicEnvironmentGroundObject = GameObject.extend({
+    ctor: function(args, spriteRes)
+    {
+        args.group = PhysicsGroup.environment;
+        args.layer = PhysicsLayer.ground;
+        args.sensor = false;
+        this._super(args);
+        
+        this.sprite = this.createSprite(spriteRes, gameLayers.ground);
+    },
+    update: function()
+    {
+        this.updateSpritePos();
+        this.applyKineticFriction();
+    }
+});
+
+var Jar = DynamicEnvironmentGroundObject.extend({
+    mass: 0.5,
+    kineticFriction: 0.8,
+    ctor: function(args)
+    {
+        this.color = args.color;
+        this._super(args, res.sprite[this.color+'_jar']);
+    },
+    grabbable: function()
+    {
+        return true;
+    }
+});

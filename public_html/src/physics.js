@@ -13,6 +13,7 @@ var Physics = Class.extend({
 
         this.space.intraGroups = {};
         this.space.intraGroups[PhysicsGroup.agent] = true;
+        this.space.intraGroups[PhysicsGroup.environment] = true;
         
         this.setCollisionHandlers();
     },

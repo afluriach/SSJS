@@ -74,6 +74,28 @@ var GameObject = Class.extend({
             );
         }
     },
+    inLayer: function(layer)
+    {
+        return this.physicsBody.shape.layers & layer;
+    },
+    //apply kinetic friction if is defined and the object is not currently
+    //on the ground i.e. being grabbed
+    applyKineticFriction: function()
+    {
+        if(this.kineticFriction && this.inLayer(PhysicsLayer.ground) && this.isMoving())
+        {
+            if(this.getVel().len2() < this.mass*this.kineticFriction*secondsPerFrame)
+            {
+                //Avoid overshoot, force would stop object in the next frame.
+                this.setVel(Vector2.zero);
+            }
+            else
+            {
+                var force = this.getVel().mult(-1*this.mass*this.kineticFriction);
+                this.applyForceAsImpulse(force);
+            }
+        }
+    },
     getPos : function()
     {
         return Vector2.copy(this.physicsBody.getPos());
@@ -98,6 +120,11 @@ var GameObject = Class.extend({
     getVel : function()
     {
         return Vector2.copy(this.physicsBody.getVelAtLocalPoint(cc.p(0,0)));
+    },
+    isMoving: function()
+    {
+        var v = this.physicsBody.getVelAtLocalPoint(cc.p(0,0));
+        return v.x !== 0 || v.y !== 0;
     },
     setVel : function(v)
     {
