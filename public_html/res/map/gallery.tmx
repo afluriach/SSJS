@@ -17,9 +17,21 @@
   </data>
  </layer>
  <objectgroup name="agents">
-  <object name="cirno" type="GalleryCirno" x="384" y="1280" width="32" height="32"/>
-  <object name="reimu" type="GalleryReimu" x="896" y="1280" width="32" height="32"/>
-  <object name="sanae" type="GallerySanae" x="576" y="896" width="32" height="32"/>
+  <object name="cirno" type="GalleryCirno" x="384" y="1280" width="32" height="32">
+   <properties>
+    <property name="facing" value="down"/>
+   </properties>
+  </object>
+  <object name="reimu" type="GalleryReimu" x="896" y="1280" width="32" height="32">
+   <properties>
+    <property name="facing" value="down"/>
+   </properties>
+  </object>
+  <object name="sanae" type="GallerySanae" x="576" y="896" width="32" height="32">
+   <properties>
+    <property name="facing" value="right"/>
+   </properties>
+  </object>
   <object name="player" type="GalleryAya" x="640" y="1504" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="doors">

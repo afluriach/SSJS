@@ -15,7 +15,7 @@ var Entity = GameObject.extend({
         
         if(args.facing)
         {
-            this.sprite.setDirectionFromAngle(Vector2[args.facing].getAngle());
+            this.sprite.setDirectionFromAngle(standardAngleRad(Vector2[args.facing].getAngle()));
         }
         
         this.stepAccumulator = new Accumulator(0,this.stepSize, this.stepAnimation.bind(this));
