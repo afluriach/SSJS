@@ -124,6 +124,17 @@ var Physics = Class.extend({
         
         return objectFound;
     },
+    getObjectsEnclosedInArea: function(bb, layer, group, exclude)
+    {
+        var objects = [];
+        
+        this.space.bbEnclosureQuery(bb, layer, group, function(shape){
+            if(shape.gameobject && shape.gameobject !== exclude && shape.group !== PhysicsGroup.sensor)
+                objects.push(shape.gameobject);
+        });
+        
+        return objects;
+    },
     objectFeeler: function(start, distance, angle, layers, group)
     {
         var end = start.add(Vector2.ray(distance, angle));

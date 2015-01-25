@@ -152,7 +152,7 @@ var PhotoBook = cc.Layer.extend({
         
         for(var i=0;i<inventory.photos.length; ++i)
         {
-            var p = inventory.photos[i];
+            var p = inventory.photos[i].texture;
             p.setScale(0.5);
             p.x = screenSize.width/2;
             p.y = screenSize.height - 75 - 150*i;

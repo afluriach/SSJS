@@ -55,6 +55,47 @@ var SpiritCamera = {
     cooldown: 0,
     cast: function(player){
         var photoPos = player.getFacingPoint(this.photoDistance + this.photoSize/2);
-        inventory.addPhoto(crntScene().getShot(this.photoSize, photoPos));
+        inventory.addPhoto(new Photo(this.photoSize, photoPos, player));
     }
 };
+
+var Photo = Class.extend({
+    //Store these properties if the photographed object has them.
+    objectProperties: ['color'],
+    ctor: function(photoSize, photoPos, player)
+    {
+        var photoBB = makeBB(photoPos, photoSize, photoSize);
+        this.photoPos = photoPos;
+        
+        this.texture = crntScene().getShot(photoSize, photoPos);
+        var objects = physics.getObjectsEnclosedInArea(photoBB, PhysicsLayer.all, 0, player);
+        this.savePhotographedObjects(objects);
+    },
+    savePhotographedObjects: function(objects)
+    {
+        this.objects = [];
+        
+        for(var i=0;i<objects.length; ++i)
+        {
+            this.objects.push(this.makePhotoObject(objects[i]));
+        }
+    },
+    makePhotoObject: function(obj)
+    {
+        var photoObj = {
+            name: obj.name,
+            type: obj.type,
+            //Store the relative position in the photo.
+            pos: obj.getPos().sub(this.photoPos)
+        };
+        
+        for(var i=0;i<this.objectProperties.length; ++i)
+        {
+            var prop = this.objectProperties[i];
+            if(isDefined(obj[prop]))
+                photoObj[prop] = obj[prop];
+        }
+        
+        return photoObj;
+    }
+});
