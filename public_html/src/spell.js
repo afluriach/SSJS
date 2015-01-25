@@ -97,5 +97,15 @@ var Photo = Class.extend({
         }
         
         return photoObj;
+    },
+    doesPhotoContainObjectWithProperty: function(prop, value)
+    {
+        for(var i=0;i<this.objects.length; ++i)
+        {
+            if(this.objects[i][prop] && this.objects[i][prop] === value)
+                return true;
+        }
+        return false;
     }
+
 });

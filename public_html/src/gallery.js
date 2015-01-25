@@ -24,26 +24,69 @@ var GalleryAya = Player.extend({
     },
 });
 
-var GalleryReimu = NPC.extend({
-    dialog: [['Reimu', 'Give me something powerful.']],
-    ctor: function(args)
+//NPC that looks for a photo with a specific property
+var GalleryNPC = NPC.extend({
+    ctor: function(args, entity)
     {
-        this._super(args, res.entity.reimu);
+        this._super(args, entity);
+    },
+    hasColorObject: function(photo, color)
+    {
+        return photo.doesPhotoContainObjectWithProperty('color', color);
+    },
+    onTalk: function()
+    {
+        for(var i=0;i<inventory.photos.length; ++i)
+        {
+            if(this.doesPhotoSatisfy(inventory.photos[i]))
+            {
+                //Show satisfied dialog and unlock the corresponding barrier.
+                crntScene().setDialog(this.satisfiedDialog);
+                gameObjectSystem.getByName(this.name+'_barrier').setLocked(false);
+                return;
+            }
+        }
+        crntScene().setDialog(this.dialog);
     }
 });
 
-var GalleryCirno = NPC.extend({
+var GalleryReimu = GalleryNPC.extend({
+    dialog: [['Reimu', 'Give me something powerful.']],
+    satisfiedDialog: [['Reimu', 'Just what I was looking for.']],
+    ctor: function(args)
+    {
+        this._super(args, res.entity.reimu);
+    },
+    doesPhotoSatisfy: function(photo)
+    {
+        return this.hasColorObject(photo, 'red');
+    }
+});
+
+var GalleryCirno = GalleryNPC.extend({
     dialog: [['Cirno', 'Give me something cold.']],
+    satisfiedDialog: [['Cirno', 'This photo is the greatest.']],
     ctor: function(args)
     {
         this._super(args, res.entity.cirno);
+    },
+    doesPhotoSatisfy: function(photo)
+    {
+        return this.hasColorObject(photo, 'blue');
     }
+
 });
-var GallerySanae = NPC.extend({
+var GallerySanae = GalleryNPC.extend({
     dialog: [['Sanae', 'Give me something holy.']],
+    satisfiedDialog: [['Sanae', 'I love this photo.']],
     ctor: function(args)
     {
         this._super(args, res.entity.sanae);
+    },
+    doesPhotoSatisfy: function(photo)
+    {
+        return this.hasColorObject(photo, 'green');
     }
+
 });
 
