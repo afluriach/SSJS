@@ -151,78 +151,18 @@ var WingedSwarmSpirit = Entity.extend({
     }
 });
 
-var IceBlastBullet = GameObject.extend({
-    mass: 0.3,
-    speed: 6,
-    radius: 0.4,
-    nextID: 1,
-    fadeTime: 0.5,
-    ctor: function(pos, angle)
-    {
-        var args = {};
-        args.layer = PhysicsLayer.ground;
-        args.group = PhysicsGroup.playerProjectile;
-        args.name = 'ice_blast'+this.nextID++;
-        args.type = 'IceBlastBullet';
-        args.pos = pos;
-        args.circle = true;
-        args.sensor = false;
-        
-        this._super(args);
-        
-        this.sprite = this.createSprite(res.sprite.ice_blast, gameLayers.ground);
-        this.setVel(Vector2.ray(this.speed,angle));
-    },
-    onHit: function()
-    {
-        gameObjectSystem.removeObject(this.name);
-        var fadeAndRemove = cc.sequence(
-            cc.fadeOut(this.fadeTime),
-            cc.removeSelf()
-        );
-        cc.director.getActionManager().addAction(fadeAndRemove, this.sprite, false);
-    },
-    onHitWall: function()
-    {
-        this.onHit();
-    },
-    update: function()
-    {
-        this.updateSpritePos();
-    }
-});
-
 var UnderworldCirno = Player.extend({
     actions: [Talk, Grab],
     mass: 3,
     speed: 3,
     acceleration: 4.5,
-    spellInterval: 1.5,
-    spawnBlastDistance: 0.75,
     ctor: function(args)
     {
         args.layer = PhysicsLayer.ground;
         
         this._super(args, res.entity.cirno, gameLayers.ground);
-        
-        this.spellDelayInterval = new IntervalDelay(
-            0,
-            this.spellInterval,
-            this.iceBlast.bind(this)
-        );
+        this.setSpell(IceBlast);
     },
-    update: function()
-    {
-        this._super();
-        this.spellDelayInterval.tick(keyPressed.spell);
-    },
-    iceBlast: function()
-    {
-        var pos = this.getPos().add(Vector2.ray(this.spawnBlastDistance, this.getAngle()));
-        var blast = new IceBlastBullet(pos, this.getAngle());
-        
-        gameObjectSystem.addObject(blast);
-    }
 });
 
 //dialogs

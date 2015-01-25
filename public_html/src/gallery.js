@@ -20,16 +20,8 @@ var GalleryAya = Player.extend({
     ctor: function(args)
     {
         this._super(args, res.entity.aya, gameLayers.ground);
+        this.setSpell(SpiritCamera);
     },
-    update: function()
-    {
-        this._super();
-        
-        if(keyPressed.spell)
-        {
-            inventory.addPhoto(crntScene().getShot(8));
-        }
-    }
 });
 
 var GalleryReimu = NPC.extend({

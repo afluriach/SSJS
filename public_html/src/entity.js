@@ -15,7 +15,7 @@ var Entity = GameObject.extend({
         
         if(args.facing)
         {
-            this.sprite.setDirectionFromAngle(standardAngleRad(Vector2[args.facing].getAngle()));
+            this.setDirectionAngle(standardAngleRad(Vector2[args.facing].getAngle()));
         }
         
         this.stepAccumulator = new Accumulator(0,this.stepSize, this.stepAnimation.bind(this));
@@ -130,6 +130,18 @@ var Player = Entity.extend({
             if(interactObj !== null && keyPressed.action)
                 this.interact(interactObj);
         }
+        this.spellInterval.tick(keyPressed.spell);
+    },
+    setSpell: function(spell){
+        //If cooldown was in effect for an existing spell, carry it to this one
+        //Thus cooldown cannot be avoided by switching spells.
+        var cooldown = this.spellInterval ? Math.max(this.spellInterval.remaining, 0) : 0;
+        
+        this.spellInterval = new IntervalDelay(
+            cooldown,
+            spell.cooldown,
+            spell.cast.bind(spell, this)
+        );
     },
     updateDirection: function()
     {
