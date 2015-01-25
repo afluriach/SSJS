@@ -105,7 +105,7 @@ var WingedSwarmSpirit = Entity.extend({
     },
     onHit: function(obj)
     {
-        if(obj instanceof IceBlast)
+        if(obj instanceof IceBlastBullet)
         {
             this.freezeTime = 4.5;
             this.sprite.setAnimation(res.entity.flandre_frozen);
@@ -151,7 +151,7 @@ var WingedSwarmSpirit = Entity.extend({
     }
 });
 
-var IceBlast = GameObject.extend({
+var IceBlastBullet = GameObject.extend({
     mass: 0.3,
     speed: 6,
     radius: 0.4,
@@ -163,7 +163,7 @@ var IceBlast = GameObject.extend({
         args.layer = PhysicsLayer.ground;
         args.group = PhysicsGroup.playerProjectile;
         args.name = 'ice_blast'+this.nextID++;
-        args.type = 'IceBlast';
+        args.type = 'IceBlastBullet';
         args.pos = pos;
         args.circle = true;
         args.sensor = false;
@@ -219,7 +219,7 @@ var UnderworldCirno = Player.extend({
     iceBlast: function()
     {
         var pos = this.getPos().add(Vector2.ray(this.spawnBlastDistance, this.getAngle()));
-        var blast = new IceBlast(pos, this.getAngle());
+        var blast = new IceBlastBullet(pos, this.getAngle());
         
         gameObjectSystem.addObject(blast);
     }
