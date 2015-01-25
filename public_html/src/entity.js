@@ -13,6 +13,11 @@ var Entity = GameObject.extend({
         crntScene().gameplayLayer.addChild(this.sprite, layer);
         this.updateSpritePos();
         
+        if(args.facing)
+        {
+            this.sprite.setDirectionFromAngle(Vector2[args.facing].getAngle());
+        }
+        
         this.stepAccumulator = new Accumulator(0,this.stepSize, this.stepAnimation.bind(this));
         this.leftStep = false;
     },

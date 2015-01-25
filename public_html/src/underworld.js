@@ -84,7 +84,6 @@ var WingedSwarmGatekeeper = Entity.extend({
     ctor: function(args)
     {
         this._super(args, res.entity.komachi, gameLayers.ground);
-        this.setDirection(4);
     },
     onTalk: function()
     {
@@ -212,8 +211,6 @@ var UnderworldCirno = Player.extend({
             this.spellInterval,
             this.iceBlast.bind(this)
         );
-
-        this.setDirection(2);
     },
     update: function()
     {
