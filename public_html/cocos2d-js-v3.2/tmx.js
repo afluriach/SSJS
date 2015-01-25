@@ -468,6 +468,10 @@ cc.TMXMapInfo = cc.SAXParser.extend({
                 var image = selTileset.getElementsByTagName('image')[0];
                 var imagename = image.getAttribute('source');
                 var num = -1;
+                
+                tileset.imageSize = cc.size(parseInt(image.getAttribute('width')),
+                                            parseInt(image.getAttribute('height')));
+                
                 if(this.tmxFileName)
                     num  = this.tmxFileName.lastIndexOf("/");
                 if (num !== -1) {
@@ -1038,7 +1042,7 @@ cc.TMXLayer = cc.SpriteBatchNode.extend({
         return this.properties[propertyName];
     },
     setupTiles:function () {
-        this._renderCmd.initImageSize();
+//        this._renderCmd.initImageSize();
         this._parseInternalProperties();
         if (cc._renderType === cc._RENDER_TYPE_CANVAS)
             this._setNodeDirtyForCache();
@@ -1432,10 +1436,12 @@ cc.TMXLayer.create = function (tilesetInfo, layerInfo, mapInfo) {
             }
         }
     };
-    proto.initImageSize = function(){
-        var node = this._node;
-        node.tileset.imageSize = this._originalTexture.getContentSizeInPixels();
-    };
+//Texture is not yet loaded, so this does not actually set image size.
+//Instead image size will be loaded directly from TMX tileset element.
+//    proto.initImageSize = function(){
+//        var node = this._node;
+//        node.tileset.imageSize = this._originalTexture.getContentSizeInPixels();
+//    };
     proto._reusedTileWithRect = function(rect){
         var node = this._node;
         node._reusedTile = new cc.Sprite();
