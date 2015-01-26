@@ -116,10 +116,11 @@ var Player = Entity.extend({
 
         if(this.holdingItem)
         {
-            crntScene().uiLayer.setInteractMessage('Drop');
+            var canDrop = this.canDrop();
+            crntScene().uiLayer.setInteractMessage(canDrop ? 'Drop' : '');
             this.holdingItem.setPos(this.grabPos());
             
-            if(keyPressed.action && this.canDrop())
+            if(keyPressed.action && canDrop)
                 this.drop();
         }
         else
@@ -217,7 +218,7 @@ var Player = Entity.extend({
     },
     canDrop: function()
     {
-        return physics.isObjectPresentInArea(makeBB(this.dropPos(), 1, 1), PhysicsLayer.ground, 0, null);
+        return !physics.isObjectPresentInArea(makeBB(this.dropPos(), 1, 1), PhysicsLayer.ground, 0, null);
     },
     drop: function()
     {

@@ -68,9 +68,11 @@ var DynamicEnvironmentGroundObject = GameObject.extend({
 var Jar = DynamicEnvironmentGroundObject.extend({
     mass: 0.5,
     kineticFriction: 0.8,
+    radius: 0.35,
     ctor: function(args)
     {
         this.color = args.color;
+        args.circle = true;
         this._super(args, res.sprite[this.color+'_jar']);
     },
     grabbable: function()

@@ -113,12 +113,14 @@ var Physics = Class.extend({
     {
         this.space.bbQuery(bb, layer, group, func);
     },
+    //If exclude is undefined it will ignore shapes without a gameobject
+    //(i.e. walls).
     isObjectPresentInArea: function(bb, layer, group, exclude)
     {
         var objectFound = false;
         
         this.rectangleQuery(bb, layer, group, function(shape){
-            if(shape.gameobject !== exclude && shape.group !== PhysicsGroup.sensor)
+            if(shape.gameobject !== exclude && !shape.sensor)
                 objectFound = true;
         });
         
