@@ -11,6 +11,7 @@ var gameSceneLayers = {
 };
 
 var GameplayScene = cc.Scene.extend({
+    debugPhysics: false,
     scrollInterval: 0.1,
     scrollDistance: 1,
     onEnter: function(mapRes)
@@ -38,6 +39,13 @@ var GameplayScene = cc.Scene.extend({
         //create new physics, create new game object system, and load objects
         physics = new Physics();
         gameObjectSystem = new GameObjectSystem();
+        
+        if(this.debugPhysics)
+        {
+            this.physicsNode = new cc.PhysicsDebugNode(physics.space);
+            this.physicsNode.setScale(pixelsPerTile);
+            this.gameplayLayer.addChild(this.physicsNode, gameLayers.physics);
+        }
         
         this.loadMapObjects();
         this.addWalls();
@@ -190,15 +198,56 @@ var GameplayScene = cc.Scene.extend({
         var layer = this.map.getLayer('wall');
         if(!layer) return;
 
-        //if getTileAt is null, there is no texture at that location
-        for(var y =0; y < layer._layerSize.height; ++y)
+        var horizontalTiles = {};
+        var mapWidth = layer._layerSize.width;
+        var mapHeight = layer._layerSize.height;
+
+        //Start by considering consecutive horizontal pieces.
+        for(var y =0; y < mapHeight; ++y)
         {
-            for(var x = 0; x < layer._layerSize.width; ++x)
+            for(var x = 0; x < mapWidth;)
             {
-                if(layer.getTileAt(x,y) !== null)
-                {
-                    physics.createWallTile(x,this.map._mapSize.height-y-1);
+                if(layer.getTileAt(x,y) === null){
+                    ++x;
+                    continue;
                 }
+                
+                var width = 1;
+                while(x+width < mapWidth && layer.getTileAt(x+width,y) !== null){
+                    ++width;
+                }
+                
+                if(width > 1){
+                    for(var i=0;i<width; ++i){
+                        horizontalTiles[mapWidth*y+x+i] = true;
+                    }
+                    physics.createHorizontalWallTile(x,this.map._mapSize.height-y-1, width);
+                }
+                x += width;
+            }
+        }
+
+        //Add vertical tiles, including single height tiles but skipping those
+        //that were part of a horizontal.
+        for(var x=0; x < mapWidth; ++x)
+        {
+            for(var y=0; y< mapHeight;)
+            {
+                if(layer.getTileAt(x,y) === null || horizontalTiles[mapWidth*y+x]){
+                    ++y;
+                    continue;
+                }
+
+                var height = 0;
+
+                while(y+height < mapHeight &&
+                      layer.getTileAt(x,y+height) !== null &&
+                      !horizontalTiles[mapWidth*(y+height)+x]){
+                        ++height;
+                }
+
+                physics.createVerticalWallTile(x, mapHeight-y-height, height);
+                y += height;
             }
         }
     },

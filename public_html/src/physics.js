@@ -87,12 +87,20 @@ var Physics = Class.extend({
     {
         this.space.step(secondsPerFrame);
     },
-    createWallTile: function(x, y)
+    createVerticalWallTile: function(x, y, height)
+    {
+        this.createWallTile(x,y,1,height);
+    },
+    createHorizontalWallTile: function(x, y, width)
+    {
+        this.createWallTile(x,y,width,1);
+    },
+    createWallTile: function(x, y, width, height)
     {
         var body = createStaticBody();
         body.static = true;
-        body.p =  new cp.Vect(x+0.5, y+0.5);
-        var shape = new cp.BoxShape(body, 1, 1);
+        body.p =  new cp.Vect(x+width/2, y+height/2);
+        var shape = new cp.BoxShape(body, width, height);
         body.shape = shape;
         this.space.addShape(shape);
         
