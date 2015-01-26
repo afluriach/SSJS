@@ -2253,8 +2253,8 @@ var Space = cp.Space = function() {
 	this.damping = 1;
 	this.idleSpeedThreshold = 0;
 	this.sleepTimeThreshold = Infinity;
-	this.collisionSlop = 0.1;
-	this.collisionBias = Math.pow(1 - 0.1, 60);
+	this.collisionSlop = 0.001;
+	this.biasCoef = 0.5;
 	this.collisionPersistence = 3;
 	this.enableContactGraph = false;
 	this.staticBody = new Body(Infinity, Infinity);
@@ -3029,9 +3029,8 @@ Space.prototype.step = function(dt)
 			}
 		}
 		var slop = this.collisionSlop;
-		var biasCoef = 1 - Math.pow(this.collisionBias, dt);
 		for(i=0; i<arbiters.length; i++){
-			arbiters[i].preStep(dt, slop, biasCoef);
+			arbiters[i].preStep(dt, slop, this.biasCoef);
 		}
 		for(i=0; i<constraints.length; i++){
 			var constraint = constraints[i];
