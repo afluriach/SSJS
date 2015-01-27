@@ -3,11 +3,24 @@ function isDefined(x)
     return typeof x !== 'undefined';
 }
 
+function isAllDefined()
+{
+    for(var i=0;i<arguments.length; ++i)
+    {
+        if(!isDefined(arguments[i]))
+            return false;
+    }
+    return true;
+}
+
 //accumulate a value, and run an action for every interval accumulated
 var Accumulator = Class.extend({
     //if auto is set, check after every add
     ctor: function(initial, interval, action)
     {
+        if(!isAllDefined(initial, interval, action))
+            throw new Error("Accumulator: parameter missing.");
+        
         this.val = initial;
         this.interval = interval;
         this.action = action;
