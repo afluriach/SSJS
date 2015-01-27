@@ -2,25 +2,72 @@
 <html>
 <head>
     <title>Shrouded Sun</title>
+    <script type="text/javascript" src="jquery-2.1.3.min.js" charset="UTF-8"></script>
+
     <script type="text/javascript" src="cocos2d-js-v3.2/core.js" charset="UTF-8"></script>
     <script type="text/javascript" src="cocos2d-js-v3.2/tmx.js" charset="UTF-8"></script>
 <!--    <script type="text/javascript" src="cocos2d-js-v3.2/box2d.js" charset="UTF-8"></script>-->
     <script type="text/javascript" src="cocos2d-js-v3.2/chipmunk.js" charset="UTF-8"></script>
     <!--<script type="text/javascript" src="cocos2d-js-v3.2/spine.js" charset="UTF-8"></script>-->
+
+    <script>
+        
+        window.onload = function(){
+            cc.game.onStart = function(){
+                //set resolution policy
+                //load resources
+                cc.LoaderScene.preload(res_list, function () {
+                    startGame();
+                }, this);
+            };
+        };
+
+        function setCanvasResolution(width, height){
+            var c = document.getElementById('gameCanvas');
+            c.width = width;
+            c.height = height;
+        }
+        
+        function getResolution(){
+            var elements = document.getElementsByName("resolution");
+            
+            for(var i=0;i<elements.length; ++i){
+                if(elements[i].checked){
+                    var s = elements[i].value.split('_');
+                    return {
+                        width: parseInt(s[0]),
+                        height: parseInt(s[1])
+                    };
+                }
+            }
+        }
+        
+        function applySettingsAndLaunch(){
+            var res = getResolution();
+            setCanvasResolution(res.width, res.height);
+            $("div#launchSettingsDiv").hide();
+            $("dvi#gameDiv").show();
+            cc.game.run("gameCanvas");
+        }
+    </script>
 </head>
 <body>
-    <canvas id="gameCanvas" width="1280" height="720"></canvas>
-    <script type="text/javascript">
-          window.onload = function(){
-              cc.game.onStart = function(){
-                  //set resolution policy
-                  //load resources
-                  cc.LoaderScene.preload(res_list, function () {
-                      startGame();
-                  }, this);
-              };
-              cc.game.run("gameCanvas");
-          };
+    <div id="launchSettingsDiv">
+        <input type="radio" name="resolution" value="640_480"> 640x480 <br>
+        <input type="radio" name="resolution" value="640_720" checked> 640x720 <br>
+        <input type="radio" name="resolution" value="800_450"> 800x450 <br>
+        <input type="radio" name="resolution" value="800_600"> 800x600 <br>
+        <input type="radio" name="resolution" value="1200_600"> 1200x600 <br>
+        <input type="radio" name="resolution" value="1280_720"> 1280x720 <br>
+        
+        <button onclick="applySettingsAndLaunch()"> Launch </button>
+        
+    </div>
+    <div id="gameDiv">
+        <canvas id="gameCanvas" width="1280" height="720"></canvas>
+    </div>
+    <script>
+        $("gameDiv").hide();
     </script>
 </body>
 </html>
