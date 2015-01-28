@@ -58,7 +58,7 @@
         {
             if(typeof this[method] !== 'function')
                 throw new Error(method + ' is not a function');
-            this[method].apply(this, Array.prototype.slice.call(arguments, 1));
+            return this[method].apply(this, Array.prototype.slice.call(arguments, 1));
         }
     };
  
