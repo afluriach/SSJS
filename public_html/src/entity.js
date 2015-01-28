@@ -20,11 +20,21 @@ var Entity = GameObject.extend({
         
         this.stepAccumulator = new Accumulator(0,this.stepSize, this.stepAnimation.bind(this));
         this.leftStep = false;
+        
+        this.fsm = null;
+    },
+    init: function()
+    {
+        if(this.fsm !== null)
+            this.fsm.init();
     },
     update: function()
     {
         this.updateSpritePos();
         this.updateStep();
+        
+        if(this.fsm !== null)
+            this.fsm.update();
     },
     updateStep: function()
     {

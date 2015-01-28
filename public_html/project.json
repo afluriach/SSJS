@@ -28,6 +28,7 @@
         "game_object",
         "game_object_system",
         
+        "ai",
         "entity",
         "environment",
         "sensor",
