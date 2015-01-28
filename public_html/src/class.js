@@ -51,6 +51,16 @@
    
     // Enforce the constructor to be what we expect
     Class.prototype.constructor = Class;
+    
+    Class.prototype.callIfExists = function(method)
+    {
+        if(this[method])
+        {
+            if(typeof this[method] !== 'function')
+                throw new Error(method + ' is not a function');
+            this[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        }
+    };
  
     // And make this class extendable
     Class.extend = arguments.callee;

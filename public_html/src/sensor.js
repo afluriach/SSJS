@@ -42,12 +42,10 @@ var Radar = GameObject.extend({
     },
     onDetect: function(obj)
     {
-        if(isDefined(this.owner.onDetect))
-            this.owner.onDetect(obj);
+        this.owner.callIfExists('onDetect', obj);
     },
     onEndDetect: function(obj)
     {
-        if(isDefined(this.owner.onEndDetect))
-            this.owner.onEndDetect(obj);
+        this.owner.callIfExists('onEndDetect', obj);
     }
 });

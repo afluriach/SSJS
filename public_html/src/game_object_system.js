@@ -44,15 +44,13 @@ var GameObjectSystem = Class.extend({
     updateAll: function(){
         for(var uid in this.objects)
         {
-            if(this.objects[uid].update)
-                this.objects[uid].update();
+            this.objects[uid].callIfExists('update');
         }
     },
     initAll: function(){
         for(var uid in this.objects)
         {
-            if(this.objects[uid].init)
-                this.objects[uid].init();
+            this.objects[uid].callIfExists('init');
         }
     }
 });

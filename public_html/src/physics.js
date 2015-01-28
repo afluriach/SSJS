@@ -178,18 +178,15 @@ function projectileObjectBegin(arb)
     var proj = arb.getShapes()[0].gameobject;
     var obj = arb.getShapes()[1].gameobject;
     
-    if(isDefined(obj.onHit))
-        obj.onHit(proj);
-    if(isDefined(proj.onHit))
-        proj.onHit(obj);
+    obj.callIfExists('onHit', proj);
+    proj.callIfExists('onHit', obj);
 }
 
 function projectileWallBegin(arb)
 {
     var proj = arb.getShapes()[0].gameobject;
     
-    if(isDefined(proj.onHit))
-        proj.onHitWall();
+    proj.callIfExists('onHitWall');
 }
 
 PhysicsLayer = {
