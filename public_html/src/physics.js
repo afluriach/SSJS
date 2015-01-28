@@ -112,7 +112,9 @@ var Physics = Class.extend({
     {
         this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.playerSensor, agentSensorBegin, null, null, agentSensorEnd);
         this.space.addCollisionHandler(PhysicsGroup.player, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
+        this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.agent, agentAgentBegin, null, null);
         this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.sensor, agentSensorBegin, null, null, agentSensorEnd);
+        this.space.addCollisionHandler(PhysicsGroup.agent, PhysicsGroup.wall, agentWallBegin, null, null, null);
         this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.agent, projectileObjectBegin, null, null, null);
         this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.wall, projectileWallBegin, null, null, null);
         this.space.addCollisionHandler(PhysicsGroup.playerProjectile, PhysicsGroup.environment, projectileObjectBegin, null, null, null);
@@ -144,6 +146,19 @@ var Physics = Class.extend({
         });
         
         return objects;
+    },
+    //Returns the distance to the detected obstacle, or the original distance
+    //provided if no obstacle detected. Senses walls, but ignores objects equal
+    //to exclude if provided.
+    obstacleFeeler: function(start, distance, angle, layers, group, exclude)
+    {
+        var end = start.add(Vector2.ray(distance, angle));
+        
+        //Space.prototype.segmentQuery = function(start, end, layers, group, func)
+        var query_info = this.space.segmentQueryFirst(start.chipmunk(),end.chipmunk(),layers,group, exclude);
+        
+        if(!query_info) return distance;
+        else return query_info.hitDist(start, end);
     },
     objectFeeler: function(start, distance, angle, layers, group)
     {
@@ -187,6 +202,26 @@ function projectileWallBegin(arb)
     var proj = arb.getShapes()[0].gameobject;
     
     proj.callIfExists('onHitWall');
+}
+
+function agentWallBegin(arb)
+{
+    var agent = arb.getShapes()[0].gameobject;
+    
+    agent.callIfExists('onHit');
+    
+    return true;
+}
+
+function agentAgentBegin(arb)
+{
+    var agent1 = arb.getShapes()[0].gameobject;
+    var agent2 = arb.getShapes()[1].gameobject;
+    
+    agent1.callIfExists('onHit', agent2);
+    agent2.callIfExists('onHit', agent1);
+    
+    return true;
 }
 
 PhysicsLayer = {

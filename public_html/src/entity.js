@@ -28,6 +28,11 @@ var Entity = GameObject.extend({
         if(this.fsm !== null)
             this.fsm.init();
     },
+    onHit: function(obj)
+    {
+        if(this.fsm)
+            this.fsm.onHit(obj);
+    },
     update: function()
     {
         this.updateSpritePos();

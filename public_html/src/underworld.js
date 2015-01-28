@@ -95,6 +95,11 @@ var WingedSwarmSpirit = Entity.extend({
     radarRadius: 3,
     acceleration: 5,
     speed: 5,
+    
+    walkDist: new Range(1,3),
+    walkDelay: new Range(0.5, 1,5),
+    walkSpeed: new Range(1,3),
+    
     ctor: function(args)
     {
         args.layer = PhysicsLayer.ground;
@@ -102,14 +107,16 @@ var WingedSwarmSpirit = Entity.extend({
         this._super(args, res.entity.flandre, gameLayers.ground);
         
         this.radar = new Radar(this, this.radarRadius, PhysicsLayer.ground, PhysicsGroup.playerSensor);
-        this.fsm = new StateMachine(this, new Idle());
+        this.fsm = new StateMachine(this, new RandomWalk(this.walkDist, this.walkDelay, this.walkSpeed));
     },
     onHit: function(obj)
     {
+        this._super(obj);
         if(obj instanceof IceBlastBullet)
         {
             this.freezeTime = 4.5;
             this.sprite.setAnimation(res.entity.flandre_frozen);
+            this.fsm.paused = true;
         }
     },
     onDetect: function(obj)
@@ -118,7 +125,7 @@ var WingedSwarmSpirit = Entity.extend({
     },
     onEndDetect: function(obj)
     {
-        this.fsm.setState(new Idle());
+        this.fsm.setState(new RandomWalk(this.walkDist, this.walkDelay, this.walkSpeed));
     },
     update: function()
     {
@@ -128,11 +135,13 @@ var WingedSwarmSpirit = Entity.extend({
         {
             this.freezeTime -= secondsPerFrame;
             this.stepAccumulator.set(0);
+            this.applyDesiredVelocity(Vector2.zero);
             
             if(this.freezeTime < 0)
             {
                 this.sprite.setAnimation(res.entity.flandre);
                 delete this.freezeTime;
+                this.fsm.paused = false;
             }
             else if(this.freezeTime < 2)
                 this.sprite.setAnimation(res.entity.flandre_frozen_ending);

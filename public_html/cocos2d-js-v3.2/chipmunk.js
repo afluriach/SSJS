@@ -2805,7 +2805,7 @@ Space.prototype.segmentQuery = function(start, end, layers, group, func)
 		this.activeShapes.segmentQuery(start, end, 1, helper);
 	} this.unlock(true);
 };
-Space.prototype.segmentQueryFirst = function(start, end, layers, group)
+Space.prototype.segmentQueryFirst = function(start, end, layers, group, exclude)
 {
 	var out = null;
 	var helper = function(shape){
@@ -2813,6 +2813,7 @@ Space.prototype.segmentQueryFirst = function(start, end, layers, group)
 		if(
 			!(shape.group && group === shape.group) && (layers & shape.layers) &&
 			!shape.sensor &&
+			(!exclude || shape.gameobject !== exclude) &&
 			(info = shape.segmentQuery(start, end)) &&
 			(out === null || info.t < out.t)
 		){

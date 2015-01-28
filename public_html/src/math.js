@@ -137,3 +137,21 @@ function standardAngleRad(rad)
     
     return rad;
 }
+
+function randomInt(min,max)
+{
+    return Math.floor(Math.random()*(max-min)) + min;
+}
+
+var Range = Class.extend({
+    ctor: function(min,max)
+    {
+        require(min,max);
+        this.min = min;
+        this.max = max;
+    },
+    random: function()
+    {
+        return Math.random()*(this.max-this.min)+this.min;
+    }
+});
