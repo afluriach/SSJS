@@ -13,14 +13,25 @@ function isAllDefined()
     return true;
 }
 
+function require()
+{
+    if(arguments.length === 0)
+        throw new Error("require called with no arguments.");
+
+    for(var i=0;i<arguments.length; ++i)
+    {
+        if(!isDefined(arguments[i]))
+            throw new Error("argument " + i + "is not defined");
+    }
+    return true;
+}
+
 //accumulate a value, and run an action for every interval accumulated
 var Accumulator = Class.extend({
     //if auto is set, check after every add
     ctor: function(initial, interval, action)
     {
-        if(!isAllDefined(initial, interval, action))
-            throw new Error("Accumulator: parameter missing.");
-        
+        require(initial, interval, action);
         this.val = initial;
         this.interval = interval;
         this.action = action;
