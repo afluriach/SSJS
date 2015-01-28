@@ -1,3 +1,13 @@
+function obstacleFeelers8Dir(agent, distance)
+{
+    var dists = [];
+    for(var dir=0;dir<8; ++dir)
+    {
+        dists.push(agent.obstacleFeeler(distance, Math.PI/4*dir));
+    }
+    return dists;
+}
+
 var StateMachine = Class.extend({
     ctor: function(agent, start)
     {
@@ -96,19 +106,7 @@ Idle.make('RandomWalk',{
     //Get an unobsructed point.
     getPoint: function(agent)
     {
-        var dists = [];
-        for(var dir=0;dir<8; ++dir)
-        {
-            var obstacleDist = physics.obstacleFeeler(
-                agent.getPos(),
-                this.distRange.max + agent.radius,
-                Math.PI/4*dir,
-                PhysicsLayer.ground,
-                0,
-                this
-            );
-            dists.push(obstacleDist);
-        }
+        var dists = obstacleFeelers8Dir(agent, this.distRange.max);
         
         //select directions that allow for moving at least the minimum distance.
         var selected = [];

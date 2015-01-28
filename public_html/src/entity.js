@@ -72,6 +72,17 @@ var Entity = GameObject.extend({
                 this.leftStep = true;
         }
     },
+    obstacleFeeler: function(distance, angle)
+    {
+        return physics.obstacleFeeler(
+            this.getPos(),
+            distance + this.radius,
+            angle,
+            PhysicsLayer.ground,
+            0,
+            this
+        );
+    },
     setDirection: function(dir)
     {
         this.sprite.setDirection(dir);
