@@ -21,7 +21,7 @@ function require()
     for(var i=0;i<arguments.length; ++i)
     {
         if(!isDefined(arguments[i]))
-            throw new Error("argument " + i + "is not defined");
+            throw new Error("argument " + i + " is not defined");
     }
     return true;
 }
