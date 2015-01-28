@@ -8,6 +8,30 @@ function obstacleFeelers8Dir(agent, distance)
     return dists;
 }
 
+//Find obstructed direction to move in, closest in direction to angle.
+//Returns null if no direction is unobstructed.
+function getUnobstructedDirection(agent, distance, angle)
+{
+    var preferredDir = Vector2.ray(1,angle);
+    var dists = obstacleFeelers8Dir(agent, distance);
+    var bestDir = null;
+    var bestDot = null;
+    
+    for(var dir=0;dir<8; ++dir)
+    {
+        var crntDot = preferredDir.dot(Vector2.ray(1, Math.PI/4*dir));
+
+        //If direction is unobstructed (feeler reports no obstacle in the search
+        //distance) and this direction is the first or the best found.
+        if(dists[dir] === distance && (bestDir === null || crntDot > bestDot))
+        {
+            bestDir = dir;
+            bestDot = crntDot;
+        }
+    }
+    return bestDir;
+}
+
 var StateMachine = Class.extend({
     ctor: function(agent, start)
     {
@@ -56,6 +80,7 @@ State.make('Idle', {
 });
 
 State.make('Flee', {
+    obstacleDist: 2,
     ctor: function(target)
     {
         require(target);
@@ -65,8 +90,25 @@ State.make('Flee', {
     update: function(agent)
     {
         var dir = agent.getPos().sub(this.target.getPos()).getUnit();
-        agent.applyDesiredVelocity(dir.mult(agent.speed));
-        agent.setDirectionAngle(dir.getAngle());
+     
+        //If path is unobstructed, move directly away from target.
+        if(agent.obstacleFeeler(this.obstacleDist, dir.getAngle()) === this.obstacleDist)
+        {
+            agent.applyDesiredVelocity(dir.mult(agent.speed));
+            agent.setDirectionAngle(dir.getAngle());
+        }
+        //Find an unobstructed direction to move in, preferring a drection away
+        //from the player
+        else
+        {
+            var fleeDir = getUnobstructedDirection(agent, this.obstacleDist, dir.getAngle());
+            if(fleeDir !== null)
+            {
+                var angle = fleeDir*Math.PI/4;
+                agent.applyDesiredVelocity(Vector2.ray(agent.speed, angle));
+                agent.setDirectionAngle(angle);
+            }
+        }
     }
 });
 
