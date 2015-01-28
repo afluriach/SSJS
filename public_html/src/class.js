@@ -38,6 +38,12 @@
         })(name, prop[name]) :
         prop[name];
     }
+    
+    Class.make = function(name, defn)
+    {
+        defn.className = name;
+        window[name] = this.extend(defn);
+    };
    
     // The dummy class constructor
     function Class() {

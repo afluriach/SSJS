@@ -10,6 +10,7 @@ var StateMachine = Class.extend({
     {
         this.start.callIfExists('onEnter', this.agent);
         this.crntState = this.start;
+        cc.log(this.agent.name + ' initialized in state ' + this.crntState.className);
     },
     update: function()
     {
@@ -18,6 +19,7 @@ var StateMachine = Class.extend({
     setState: function(newState)
     {
         this.crntState.callIfExists('onExit', this.agent);
+        cc.log(this.agent.name + ' changed from state ' + this.crntState.className + ' to ' + newState.className);
         newState.callIfExists('onEnter', this.agent);
         this.crntState = newState;
     }
@@ -26,14 +28,14 @@ var StateMachine = Class.extend({
 var State = Class.extend({
 });
 
-var Idle = State.extend({
+State.make('Idle', {
     update: function(agent)
     {
         agent.applyDesiredVelocity(Vector2.zero);
     }
 });
 
-var Flee = State.extend({
+State.make('Flee', {
     ctor: function(target)
     {
         require(target);
