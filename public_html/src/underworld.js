@@ -102,7 +102,7 @@ var WingedSwarmSpirit = Entity.extend({
         this._super(args, res.entity.flandre, gameLayers.ground);
         
         this.radar = new Radar(this, this.radarRadius, PhysicsLayer.ground, PhysicsGroup.playerSensor);
-        this.fsm = new StateMachine(new Idle(this));
+        this.fsm = new StateMachine(this, new Idle());
     },
     onHit: function(obj)
     {
@@ -114,11 +114,11 @@ var WingedSwarmSpirit = Entity.extend({
     },
     onDetect: function(obj)
     {
-        this.fsm.setState(new Flee(this, obj));
+        this.fsm.setState(new Flee(obj));
     },
     onEndDetect: function(obj)
     {
-        this.fsm.setState(new Idle(this));
+        this.fsm.setState(new Idle());
     },
     update: function()
     {
