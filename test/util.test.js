@@ -1,6 +1,11 @@
 describe("Accumulator", function(){
     it('should throw error if any parameter is not defined', function() {
-        expect( function() { new Accumulator();}).toThrow(new Error("Accumulator: parameter missing."));
+        var someUndefinedVariable;
+        expect( function() { new Accumulator();}).toThrow(new Error("argument 0 is not defined"));
+        expect( function() { new Accumulator(1);}).toThrow(new Error("argument 1 is not defined"));
+        expect( function() { new Accumulator(1,1);}).toThrow(new Error("argument 2 is not defined"));
+        expect( function() { new Accumulator(someUndefinedVariable,1,1);}).toThrow(new Error("argument 0 is not defined"));
+        expect( function() { new Accumulator(1, someUndefinedVariable,1);}).toThrow(new Error("argument 1 is not defined"));
     });
     
     it('should not run action if initial is 0 and 0 is added', function(){
