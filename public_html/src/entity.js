@@ -15,7 +15,7 @@ var Entity = GameObject.extend({
         
         if(crntScene().debugEntities)
         {
-            this.debugLabel = new cc.LabelTTF.create(this.name, 'Arial', 16);
+            this.debugLabel = new EntityLabel(this);
             crntScene().gameplayLayer.addChild(this.debugLabel, gameLayers.entity);
         }
         
@@ -45,11 +45,7 @@ var Entity = GameObject.extend({
         this.updateSpritePos();
         
         if(this.debugLabel)
-        {
-            this.updateNodePos('debugLabel');
-            if(this.fsm !== null)
-                this.debugLabel.string = this.name + ': ' + this.fsm.crntState.className;
-        }
+            this.debugLabel.update();
         
         this.updateStep();
         

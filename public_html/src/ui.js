@@ -1,3 +1,36 @@
+var EntityLabel = cc.Node.extend({
+    text: hsva(60,255,60,1),
+    outline: hsva(55,255,120,1),
+    ctor: function(agent)
+    {
+        this._super();
+        
+        this.agent = agent;
+        
+        this.label = cc.LabelTTF.create('', 'Arial', 16);
+        this.label.fillStyle = this.outline;
+        this.label.strokeStyle = this.text;
+        this.addChild(this.label, 1);
+    },
+    update: function()
+    {
+        this.updatePos();
+        this.updateMsg();
+    },
+    updatePos: function()
+    {
+        var pix = this.agent.getPos().addY(this.agent.radius).mult(pixelsPerTile);
+        this.x = pix.x;
+        this.y = pix.y;
+    },
+    updateMsg: function()
+    {
+        this.label.string = this.agent.name;
+        if(this.agent.fsm !== null && this.agent.fsm.crntState !== null)
+            this.label.string += ': \n' + this.agent.fsm.crntState.className;
+    }
+});
+
 var buttonRadius = 40;
 
 var Button = cc.Node.extend({

@@ -8,7 +8,14 @@ var Vector2 = Class.extend({
     {
         return new Vector2(this.x+v.x,this.y+v.y);
     },
-    
+    addX: function(x)
+    {
+        return new Vector2(this.x+x,this.y);
+    },
+    addY: function(y)
+    {
+        return new Vector2(this.x,this.y+y);
+    },
     sub : function(v)
     {
         return new Vector2(this.x-v.x, this.y - v.y);
