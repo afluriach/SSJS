@@ -23,7 +23,7 @@ function getUnobstructedDirection(agent, distance, angle)
 
         //If direction is unobstructed (feeler reports no obstacle in the search
         //distance) and this direction is the first or the best found.
-        if(dists[dir] === distance && (bestDir === null || crntDot > bestDot))
+        if(dists[dir] === distance + agent.radius && (bestDir === null || crntDot > bestDot))
         {
             bestDir = dir;
             bestDot = crntDot;
@@ -80,7 +80,7 @@ State.make('Idle', {
 });
 
 State.make('Flee', {
-    obstacleDist: 2,
+    obstacleDist: 1,
     ctor: function(target)
     {
         require(target);
