@@ -12,6 +12,7 @@ var gameSceneLayers = {
 
 var GameplayScene = cc.Scene.extend({
     debugPhysics: false,
+    debugEntities: false,
     scrollInterval: 0.1,
     scrollDistance: 1,
     onEnter: function(mapRes)

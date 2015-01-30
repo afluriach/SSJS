@@ -178,11 +178,16 @@ var GameObject = Class.extend({
         
         return v;
     },
-    updateSpritePos: function()
+    //Update any cocos element that the game object owns
+    updateNodePos: function(field)
     {
         var pix = this.getPos().mult(pixelsPerTile);
-        this.sprite.x = pix.x;
-        this.sprite.y = pix.y;
+        this[field].x = pix.x;
+        this[field].y = pix.y;
+    },
+    updateSpritePos: function()
+    {
+        this.updateNodePos('sprite');
     },
     onRemove: function()
     {

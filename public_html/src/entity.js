@@ -13,6 +13,12 @@ var Entity = GameObject.extend({
         crntScene().gameplayLayer.addChild(this.sprite, layer);
         this.updateSpritePos();
         
+        if(crntScene().debugEntities)
+        {
+            this.debugLabel = new cc.LabelTTF.create(this.name, 'Arial', 16);
+            crntScene().gameplayLayer.addChild(this.debugLabel, gameLayers.entity);
+        }
+        
         if(args.facing)
         {
             this.setDirectionAngle(standardAngleRad(Vector2[args.facing].getAngle()));
@@ -36,6 +42,14 @@ var Entity = GameObject.extend({
     update: function()
     {
         this.updateSpritePos();
+        
+        if(this.debugLabel)
+        {
+            this.updateNodePos('debugLabel');
+            if(this.fsm !== null)
+                this.debugLabel.string = this.name + ': ' + this.fsm.crntState.className;
+        }
+        
         this.updateStep();
         
         if(this.fsm !== null)

@@ -3,7 +3,8 @@ var gameLayers = {
     floor: 2,
     ground: 3,
     air: 4,
-    physics: 5
+    physics: 5,
+    entity: 6
 };
 
 //Contains the map and game object sprites; scrolls for camera effect.
