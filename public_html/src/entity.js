@@ -28,6 +28,7 @@ var Entity = GameObject.extend({
         this.leftStep = false;
         
         this.fsm = null;
+        this.radar = null;
     },
     init: function()
     {
@@ -51,6 +52,9 @@ var Entity = GameObject.extend({
         }
         
         this.updateStep();
+        
+        if(this.radar !== null)
+            this.radar.update();
         
         if(this.fsm !== null)
             this.fsm.update();
@@ -96,6 +100,10 @@ var Entity = GameObject.extend({
             0,
             this
         );
+    },
+    createRadar: function(radius, layer, group)
+    {
+        this.radar = new Radar(this, radius, layer, group);
     },
     setDirection: function(dir)
     {
