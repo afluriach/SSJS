@@ -164,8 +164,10 @@ var Player = Entity.extend({
             crntScene().uiLayer.setInteractMessage(canDrop ? 'Drop' : '');
             this.holdingItem.setPos(this.grabPos());
             
-            if(keyPressed.action && canDrop)
-                this.drop();
+            if((keyPressed.action || !this.holdingItem.grabbable()) && canDrop)
+                this.dropInFront();
+            else if(!this.holdingItem.grabbable())
+                this.dropInAnyDir();
         }
         else
         {
@@ -269,10 +271,27 @@ var Player = Entity.extend({
         this.holdingItem.sprite.removeFromParent();
         crntScene().gameplayLayer.addChild(this.holdingItem.sprite, gameLayers.ground);
         
-        this.holdingItem.setPos(this.dropPos());
         this.holdingItem.setSensor(false);
         
         this.holdingItem = null;
+    },
+    dropInFront: function()
+    {
+        this.holdingItem.setPos(this.dropPos());
+        this.drop();
+    },
+    dropInAnyDir: function()
+    {
+        for(var angle = 0; angle < Math.PI*2; angle += Math.PI/4)
+        {
+            if(physics.obstacleFeeler(this.getPos(), this.placeDist, angle, PhysicsLayer.ground, 0, this) === this.placeDist)
+            {
+                var dropPos = this.getPos().add(Vector2.ray(this.placeDist, angle));
+                this.holdingItem.setPos(dropPos);
+                this.drop();
+                return;
+            }
+        }
     }
 });
 

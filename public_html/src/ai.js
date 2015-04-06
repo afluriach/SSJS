@@ -39,6 +39,7 @@ var StateMachine = Class.extend({
         this.agent = agent;
         this.start = start;
         this.crntState = null;
+        this.paused = false;
     },
     init: function()
     {
@@ -55,10 +56,13 @@ var StateMachine = Class.extend({
     },
     update: function()
     {
-        var next = this.crntState.callIfExists('update', this.agent);
-        
-        if(next)
-            this.setState(next);
+        if(!this.paused)
+        {
+            var next = this.crntState.callIfExists('update', this.agent);
+
+            if(next)
+                this.setState(next);
+        }
     },
     setState: function(newState)
     {
