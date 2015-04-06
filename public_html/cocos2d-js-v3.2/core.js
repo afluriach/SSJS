@@ -36638,6 +36638,10 @@ cc.ControlSlider = cc.Control.extend({
         value = Math.min(value, this._maximumValue);
         this._value = value;
         this.needsLayout();
+        
+        if(this.onValueChanged)
+            this.onValueChanged(this._value);
+        
         this.sendActionsForControlEvents(cc.CONTROL_EVENT_VALUECHANGED);
     },
     getMinimumValue:function () {

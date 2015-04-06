@@ -7,13 +7,41 @@ var physics;
 var gameObjectSystem;
 var intenvory;
 
+var options;
+
+var defaultOptions = {
+    bgmVolume: 0.4
+};
+
 function init()
 {
     screenSize = cc.director.getWinSize();
     activateMouseControls();
     activateKeyControls();
-    
-    cc.audioEngine.setMusicVolume(0.4);
+    loadOptions();
+    applyOptions();
+}
+
+function loadOptions()
+{
+    if(isDefined(localStorage.options))
+    {
+        options = JSON.parse(localStorage.options);
+    }
+    else
+    {
+        options = defaultOptions;
+    }
+}
+
+function saveOptions()
+{
+    localStorage.options = JSON.stringify(options);
+}
+
+function applyOptions()
+{
+    cc.audioEngine.setMusicVolume(options.bgmVolume);
 }
 
 function startGame()

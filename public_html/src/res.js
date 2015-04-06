@@ -11,6 +11,9 @@ var mapNames = [
 ];
 
 var spriteNames = [
+    'slider_background',
+    'slider_foreground',
+    
     'blue_jar',
     'green_jar',
     'red_jar',
